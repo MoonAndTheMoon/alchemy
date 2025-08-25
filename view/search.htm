@@ -8,17 +8,15 @@
     
     <link rel="stylesheet" href="search.css" type="text/css">
     
-    <script src="search.js" type="text/javascript" ></script>
     <script src="data_names.js" type="text/javascript" ></script>
     <script src="data_create.js" type="text/javascript" ></script>
     </head>
     <body>
         <div class="container">
-            <h1>Element search (beta v2)</h1>
+            <h1>Element search</h1>
             <p> <span id="element-count">0</span> elements available</p>
             <div id="inputform">
-                <input id="search" type="text" placeholder="element" autocomplete="off">
-                <button id="searchbtn">Show</button> <label style="margin-left:2em">Search method:</label>
+                <input id="search" type="text" placeholder="element" autocomplete="off"><button id="searchbtn">Show</button>
                 <select id="search-method">
                     <option value="0" selected="selected">Fuzzy</option>
                     <option value="1">Contains</option>
@@ -28,9 +26,10 @@
             </div>
             <div id="solutions"></div>
         </div>
-        <div class="autocomplete-container">
+        <!--<div class="autocomplete-container">
             <ul class="autocomplete-suggestions"></ul>
-        </div>
+        </div>-->
+        <script src="search.js" type="text/javascript" ></script>
     </body>
 </html>
 
