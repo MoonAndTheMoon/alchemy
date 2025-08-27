@@ -125,11 +125,13 @@ button {
 
 .close::after {
   content: "ᅠX";
+  font-size: 90%;
 }
 
-.close:hover {
+.close/*:hover*/ {
   opacity: 1;
-  background-color: rgb(150, 0, 0);
+/*   background-color: #384f61; */
+  background-color: #0000;
 }
 
 /* Highlight already displayed solution */
@@ -165,7 +167,7 @@ p {
 /*   border: solid lightseagreen 2px; */
   border: solid teal 2px;
   cursor: default;
-  background-color: rgb(74, 67, 118);
+  background-color: rgb(54, 68, 108);
   border-radius: 5px;
 }
 
