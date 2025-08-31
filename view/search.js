@@ -3,7 +3,7 @@
 // Globals
 
 var elementsByName = Object.create(null)
-var searchMethods = [fuzzySearch, containsSearch, startsWithSearch, endsWithSearch]
+var searchMethods = [fuzzySearch, containsSearch, startsWithSearch, endsWithSearch, regExpSearch]
 var searchMethod = fuzzySearch
 var limit = 100
 
@@ -36,23 +36,21 @@ var limit = 100
 // Events
 
 document.querySelector("#search").addEventListener("keydown", function(event) {
-
   if (event.key === "Enter") {
-		search()
-		document.querySelector("#search").value = ""
-	}
-
-} )
+    search()
+    document.querySelector("#search").value = ""
+  }
+})
 
 
 document.querySelector("#search").addEventListener("keyup", function(event) {
 
   if (event.key === "<") {
-		document.querySelector("#solutions").replaceChildren()
+    document.querySelector("#solutions").replaceChildren()
     document.querySelector("#search").value = ""
-	}
+  }
 
-} )
+})
 
 
 window.addEventListener("contextmenu", function(event) {
@@ -576,24 +574,31 @@ function fuzzySearch(query, words, limit = 50) {
 }
 
 
-function containsSearch(query, words, limit = 50) {
+function containsSearch(query, words, limit=50) {
     if (!query) return []
     query = query.toLowerCase()
-    return words.filter(word => word.toLowerCase().includes(query)).slice(0, limit)
+    return words.filter( word => word.toLowerCase().includes(query) ).slice(0, limit)
 }
 
 
-function startsWithSearch(query, words, limit = 50) {
+function startsWithSearch(query, words, limit=50) {
     if (!query) return []
     query = query.toLowerCase()
-    return words.filter(word => word.toLowerCase().startsWith(query)).slice(0, limit)
+    return words.filter( word => word.toLowerCase().startsWith(query) ).slice(0, limit)
 }
 
 
-function endsWithSearch(query, words, limit = 50) {
+function endsWithSearch(query, words, limit=50) {
     if (!query) return []
     query = query.toLowerCase()
-    return words.filter(word => word.toLowerCase().endsWith(query)).slice(0, limit)
+    return words.filter( word => word.toLowerCase().endsWith(query) ).slice(0, limit)
+}
+
+
+function regExpSearch(query, words, limit=50) {
+    if (!query) return []
+    query = query.toLowerCase()
+    return words.filter( word => word.toLowerCase().match(query) ).slice(0, limit)
 }
 
 

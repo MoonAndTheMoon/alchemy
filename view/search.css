@@ -132,6 +132,7 @@ button {
   opacity: 1;
 /*   background-color: #384f61; */
   background-color: #0000;
+  color: #ccc;
 }
 
 /* Highlight already displayed solution */
