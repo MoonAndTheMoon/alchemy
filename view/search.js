@@ -2,7 +2,7 @@
 
 // Globals
 
-var elementsByName = Object.create(null)
+var elementsByName = new Map()
 var searchMethods = [fuzzySearch, containsSearch, startsWithSearch, endsWithSearch, regExpSearch]
 var searchMethod = fuzzySearch
 var limit = 100
@@ -62,7 +62,7 @@ window.addEventListener("contextmenu", function(event) {
 
 	} else if ( event.target.matches(".element") ) {
     const name = event.target.innerText.toLowerCase()
-    elementsByName[name] = [name]
+    elementsByName.set( name, elementsByName.get(name) ?? [name] )
     updateElementStatus()
     event.preventDefault()
     return false
@@ -171,6 +171,19 @@ function selectRandomArrayItems(arr, amount) {
 }
 
 
+function selectRandomRecipeIndices(amount) {
+  const { floor, random } = Math
+	const pickedIndices = []
+	
+  for ( let i = 0; i < amount; i++ ) {
+		const randomIndex = floor( random() * data.create.length )
+		pickedIndices.push(randomIndex)
+	}
+	
+	return pickedIndices
+}
+
+
 function download(filename, text) {
   const element = document.createElement("a")
   element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text))
@@ -232,10 +245,12 @@ function downloadElements(fileName, elementNames, maxPageSize=116, maxPages=20, 
 function downloadVariousElementCacheFiles () {
   const { entries, keys } = Object
 
+  const doubleSelfMerge = []
   const tripleSelfMerge = []
   const quadrupleSelfMerge = []
   const twoUniqueMerge = []
 
+  const doubleUsed = Object.create(null)
   const tripleUsed = Object.create(null)
   const quadUsed = Object.create(null)
   let twoUniqueUsed = Object.create(null)
@@ -243,7 +258,7 @@ function downloadVariousElementCacheFiles () {
   for ( const [resultId, recipes] of entries(data.create) ) {
     const recipe = recipes?.[0]
     const resultName = data.names[resultId].toLowerCase()
-    const ownsResult = !!elementsByName[resultName]
+    const ownsResult = !!elementsByName.get(resultName)
     if (!recipe || ownsResult)
       continue
 
@@ -252,12 +267,13 @@ function downloadVariousElementCacheFiles () {
       const id2 = recipe[1]
       const name1 = data.names[id1].toLowerCase()
       const name2 = data.names[id2].toLowerCase()
-      const allAvailable = !(twoUniqueUsed[name1] ?? twoUniqueUsed[name2])
-      const allOwned = !!(elementsByName[name1] && elementsByName[name2])
+      const allAvailableUnique = !(twoUniqueUsed[name1] ?? twoUniqueUsed[name2])
+      const allAvailableDouble = !(doubleUsed[name1] ?? doubleUsed[name2])
+      const allOwned = !!(elementsByName.get(name1) && elementsByName.get(name2))
       const allDifferent = id1 !== id2
       const allSame = id1 === id2
 
-      if ( allOwned && allAvailable && allDifferent ) {
+      if ( allOwned && allAvailableUnique && allDifferent ) {
         twoUniqueUsed[name1] = true
         twoUniqueUsed[name2] = true
         twoUniqueMerge.push(name1, name2)
@@ -265,6 +281,10 @@ function downloadVariousElementCacheFiles () {
         if ( twoUniqueMerge % 116 === 0 ) {
           twoUniqueUsed = Object.create(null)
         }
+      }
+      else if ( allOwned && allAvailableDouble && allSame ) {
+        doubleUsed[name1] = true
+        doubleSelfMerge.push(name1)
       }
     }
     else if ( recipe.length === 3 ) {
@@ -275,7 +295,7 @@ function downloadVariousElementCacheFiles () {
       const name2 = data.names[id2].toLowerCase()
       const name3 = data.names[id3].toLowerCase()
       const allAvailable = !(tripleUsed[name1] ?? tripleUsed[name2] ?? tripleUsed[name3])
-      const allOwned = !!(elementsByName[name1] && elementsByName[name2] && elementsByName[name3])
+      const allOwned = !!(elementsByName.get(name1) && elementsByName.get(name2) && elementsByName.get(name3))
       const allDifferent = id1 !== id2 && id1 !== id3 && id2 !== id3
       const allSame = id1 === id2 && id2 === id3
 
@@ -295,7 +315,7 @@ function downloadVariousElementCacheFiles () {
       const name3 = data.names[id3].toLowerCase()
       const name4 = data.names[id4].toLowerCase()
       const allAvailable = !(quadUsed[name1] ?? quadUsed[name2] ?? quadUsed[name3] ?? quadUsed[name4])
-      const allOwned = !!(elementsByName[name1] && elementsByName[name2] && elementsByName[name3] && elementsByName[name4])
+      const allOwned = !!(elementsByName.get(name1) && elementsByName.get(name2) && elementsByName.get(name3) && elementsByName.get(name4))
       const allDifferent = id1 !== id2 && id1 !== id3 && id1 !== id4 && id2 !== id3 && id2 !== id4 && id3 !== id4
       const allSame = id1 === id2 && id2 === id3 && id3 === id4
 
@@ -310,8 +330,10 @@ function downloadVariousElementCacheFiles () {
     console.log(tripleSelfMerge)
     console.log(quadrupleSelfMerge)
     console.log(twoUniqueMerge)
-    downloadElements( "triple.txt", tripleSelfMerge, 90, 10, true )
-    downloadElements( "quadruple.txt", quadrupleSelfMerge, 90, 10, true )
+    
+    downloadElements( "double.txt", doubleSelfMerge, 80, 10, true )
+    downloadElements( "triple.txt", tripleSelfMerge, 80, 10, true )
+    downloadElements( "quadruple.txt", quadrupleSelfMerge, 80, 10, true )
     downloadElements( "twoUnique.txt", twoUniqueMerge, 116, 30, false )
   }
 }
@@ -328,7 +350,7 @@ function downloadReconstructedMerges() {
       const result = data.names[i]
       const recipe = recipes[j]
       const ingredients = recipe.map( ingredient => data.names[ingredient].toLowerCase() )
-      const obj = { Status: 10, Elements: ingredients, Result: result.toLowerCase(), Text: result.toLowerCase() }
+      const obj = { Status: 9, Elements: ingredients, Result: result.toLowerCase(), Text: result.toLowerCase() }
       reconstructedMerges.push( obj )
     }
   }
@@ -403,7 +425,8 @@ async function loadElements(files) {
     }
   }
 
-  Object.assign( elementsByName, Object.groupBy( elements, el => el[0] ) )
+  //Object.assign( elementsByName, Object.groupBy( elements, el => el[0] ) )
+  elements.forEach( element => elementsByName.set( element[0], element ) )
   updateElementStatus()
 }
 
@@ -412,8 +435,8 @@ async function loadElements(files) {
 // New Code
 
 function addRandomSolutions( amount=10 ) {
-  const candidates = data.create/*.filter( x => x?.[0] )*/.map( (_, i) => i )
-  const randomElementIds = selectRandomArrayItems( candidates, amount )
+  const candidates = data.create.filter( x => x?.[0] ).map( (_, i) => i )
+  const randomElementIds = selectRandomArrayItems(candidates, amount)
 
   document.querySelector("#solutions").replaceChildren()
   randomElementIds.forEach( id => addSolutions(id) )
@@ -445,8 +468,8 @@ function addSolutions(resultId, afterNode) {
   solution.appendChild(close)
 
   const recipeResult = createElementSpan(resultId, false)
-  const elementListLoaded = !!Object.keys(elementsByName).length
-  const className = elementListLoaded ? ( elementsByName[ getName(resultId).toLowerCase() ] ? "have" : "missing" ) : null
+  const elementListLoaded = !!elementsByName.size
+  const className = elementListLoaded ? ( elementsByName.get( getName(resultId).toLowerCase() ) ? "have" : "missing" ) : null
   if ( className )
     recipeResult.classList.add(className)
   recipeResult.classList.add("result")
@@ -490,7 +513,7 @@ function addCombination(combination, solution) {
     }
 
     const element = createElementSpan(item.id)
-    const className = Object.keys(elementsByName).length ? ( elementsByName[ getName(item.id).toLowerCase() ] ? "have" : "missing" ) : null
+    const className = elementsByName.size ? ( elementsByName.get( getName(item.id).toLowerCase() ) ? "have" : "missing" ) : null
     if ( className )
       element.classList.add(className)
     element.classList.add("ingredient")
@@ -522,7 +545,7 @@ function updateElementStatus() {
 
   for ( const node of Array.from(nodes) ) {
     const name = node.innerText.toLowerCase()
-    if ( elementsByName[name] ) {
+    if ( elementsByName.get(name) ) {
       node.classList.remove("missing")
       node.classList.add("have")
     }
@@ -787,7 +810,7 @@ function flashDiv(div) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    const startElements = ["Fire", "Water", "Air", "Earth"]
+    const startElements = ["fire", "water", "air", "earth"]
     
     // Update element count
     document.getElementById("element-count").textContent = window.data.names.length
