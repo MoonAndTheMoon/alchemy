@@ -8,6 +8,13 @@ var searchMethod = fuzzySearch
 var limit = 100
 
 
+// Game Event
+
+var eventName = "Harvest 2025"
+var eventBackgroundColor = "brown"
+var eventFontColor = "orange"
+var eventElements = ["ferns", "cider donut", "silo door", "spices", "pecan", "gala apple", "kale", "pinecone", "mushroom", "sage", "pestle", "chickens", "grape", "wheat bundle", "chestnut", "plant nursery", "persimmon", "marshmallow", "brussels sprout", "ear of corn", "cotton boll", "fossil record", "venus flytrap", "fall frost", "beech nut", "harvest moon", "acorn squash", "root vegetable", "plum", "hickory nut", "mossy pumpkin", "cauliflower", "blackberry", "shovel", "hayride", "dried corn", "crop science", "acorn", "orange leaf", "marmalade", "sunflower head", "wagon axle", "straw bale", "pumpkin spice", "corn silk", "maple leaf", "pumpkin", "pomegranate", "corn husk doll", "scarecrow hat", "clove", "cranberry", "grillmaster", "dietitian", "maize ear", "pear", "fairy garden", "turnip", "cob", "batch", "carrot", "mulberry", "haymow", "cocoa beans", "farm silo", "walnut", "pumpkin head", "plowing furrow", "brown leaf", "scarecrow", "cider", "chamomile", "indian corn", "blueberry", "rye sheaf", "mother nature", "maize husk", "gourd", "raincoat", "tall cornstalk", "apple", "beet", "parsnip", "cinnamon stick", "fish farming", "bramble", "rusty tractor", "aloe", "honeycrisp apple", "thyme", "corn", "bait basket", "pepper", "wheat sheaf", "rutabaga", "harvesting", "maize", "dried leaf", "hazelnut", "hay bale", "squash", "quince", "cobweb", "sweet potato", "fig"]
+
 
 // Add UI
 {
@@ -27,6 +34,13 @@ var limit = 100
   const randomBtn = Create( "button", { assign:{ innerText: "10 Random" }, attr:{} } )
   randomBtn.addEventListener( "click", () => addRandomSolutions(10) )
   Append( titleRow, randomBtn )
+  
+  // Event button
+  if (eventElements.length) {
+    const eventBtn = Create( "button", { assign:{ innerText: eventName }, style:{ backgroundColor: eventBackgroundColor, color: eventFontColor } } )
+    eventBtn.addEventListener( "click", () => eventElements.forEach( name => search(name) ) )
+    Append( titleRow, eventBtn )
+  }
 
   document.querySelector("body > div.container").prepend( titleRow )
 }
@@ -439,6 +453,15 @@ function addRandomSolutions( amount=10 ) {
   const randomElementIds = selectRandomArrayItems(candidates, amount)
 
   document.querySelector("#solutions").replaceChildren()
+  randomElementIds.forEach( id => addSolutions(id) )
+}
+
+
+function addEventSolutions() {
+  const candidates = data.create.filter( x => x?.[0] ).map( (_, i) => i )
+  const randomElementIds = selectRandomArrayItems(candidates, amount)
+
+  //document.querySelector("#solutions").replaceChildren()
   randomElementIds.forEach( id => addSolutions(id) )
 }
 
