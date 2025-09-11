@@ -197,6 +197,18 @@ p {
   background-color: #cf8851;
 }
 
+.element.result.norecipe {
+  border: solid 2px gray;
+  color: #ccc;
+  background-color: rgb(80, 80, 100);
+}
+
+.element.ingredient.norecipe {
+	border: solid gray 1px;
+  color: #ccc;
+  background-color: rgb(80, 80, 100);
+}
+
 #titleRow {
   margin-top: 2px;
 }

@@ -38,7 +38,7 @@ var eventElements = ["ferns", "cider donut", "silo door", "spices", "pecan", "ga
   // Event button
   if (eventElements.length) {
     const eventBtn = Create( "button", { assign:{ innerText: eventName }, style:{ backgroundColor: eventBackgroundColor, color: eventFontColor } } )
-    eventBtn.addEventListener( "click", () => eventElements.forEach( name => search(name) ) )
+    eventBtn.addEventListener( "click", () => eventElements.forEach( name => search(name, true) ) )
     Append( titleRow, eventBtn )
   }
 
@@ -466,56 +466,8 @@ function addEventSolutions() {
 }
 
 
-function addSolutions(resultId, afterNode) {
-  const id = formatBack(getName(resultId))
-
-  const alreadyExistingDiv = document.querySelector(`[data-id="${id}"]`)
-  if (alreadyExistingDiv) {
-    flashDiv(alreadyExistingDiv)
-    return
-  }
-
-  const solution = document.createElement('div')
-  solution.classList.add('solution')
-  solution.dataset.id = formatBack( getName(resultId) )
-
-  const creates = window.data.create[resultId]
-  if (!creates?.length)
-    return
-
-  const close = document.createElement('span')
-  close.classList.add('close')
-  close.addEventListener('click', function () {
-    solution.remove()
-  })
-  solution.appendChild(close)
-
-  const recipeResult = createElementSpan(resultId, false)
-  const elementListLoaded = !!elementsByName.size
-  const className = elementListLoaded ? ( elementsByName.get( getName(resultId).toLowerCase() ) ? "have" : "missing" ) : null
-  if ( className )
-    recipeResult.classList.add(className)
-  recipeResult.classList.add("result")
-  solution.appendChild( recipeResult )
-  solution.appendChild( document.createTextNode(' = ') )
-
-  for (let i = 0; i < creates.length; i++) {
-    if (i > 0) {
-      solution.appendChild( document.createTextNode(' or ') )
-    }
-    addCombination(creates[i], solution)
-  }
-
-  solution.appendChild(document.createElement('br'))
-
-  if ( afterNode )
-    afterNode.after(solution)
-  else
-    document.querySelector("#solutions").appendChild(solution)
-}
-
-
 function addCombination(combination, solution) {
+  console.log(combination, solution)
   const packed = []
   let lastId = combination[0]
   let count = 1
@@ -549,13 +501,81 @@ function addCombination(combination, solution) {
 }
 
 
+function addSolutions(resultId, afterNode) {
+  const id = typeof resultId === "number" ? formatBack(getName(resultId)) : resultId
+  console.log(resultId, id)
+  //return
+
+  const alreadyExistingDiv = document.querySelector(`[data-id="${id}"]`)
+  if (alreadyExistingDiv) {
+    flashDiv(alreadyExistingDiv)
+    return
+  }
+
+  const solution = document.createElement('div')
+  solution.classList.add('solution')
+  solution.dataset.id = id
+
+  const creates = window.data.create[resultId]
+  //if (!creates?.length)
+  //  return
+
+  const close = document.createElement('span')
+  close.classList.add('close')
+  close.addEventListener('click', function () {
+    solution.remove()
+  })
+  solution.appendChild(close)
+
+  const recipeResult = createElementSpan(resultId, false)
+  const elementListLoaded = !!elementsByName.size
+  const className = elementListLoaded ? ( elementsByName.get( getName(resultId).toLowerCase() ) ? "have" : "missing" ) : null
+  if ( className )
+    recipeResult.classList.add(className)
+  recipeResult.classList.add("result")
+  solution.appendChild( recipeResult )
+	if (creates?.length)
+  	solution.appendChild( document.createTextNode(' = ') )
+
+  for (let i = 0; i < creates?.length; i++) {
+    if (i > 0) {
+      solution.appendChild( document.createTextNode(' or ') )
+    }
+    addCombination(creates[i], solution)
+  }
+
+  solution.appendChild(document.createElement('br'))
+
+  if ( afterNode )
+    afterNode.after(solution)
+  else
+    document.querySelector("#solutions").appendChild(solution)
+}
+
+
+function search(name, allowNonExisting=false) {
+    const elementName = name ?? document.getElementById("search").value.trim()
+    let id = getId(elementName)
+    if (!~id) {
+        id = getId(formatElement(formatBack(elementName)))
+    }
+    if (~id) {
+        addSolutions(id)
+    } else if (elementName && allowNonExisting) {
+        addSolutions(elementName)
+    }
+}
+
+
 function createElementSpan(id, clickable=true) {
-    const name = getName(id)
-    const element = document.createElement('span')
-    element.classList.add('element')
+    const name = typeof id === "number" ? getName(id) : id
+    const element = document.createElement("span")
+    element.classList.add("element")
     element.textContent = formatElement(name)
+    if ( typeof id === "string" )
+      element.classList.add("norecipe")
     if (clickable) {
-      element.addEventListener('click', function () {
+      element.addEventListener("click", function () {
         addSolutions(id, element.parentElement)
       })
     }
@@ -809,18 +829,6 @@ function formatElement(name) {
     return name.toLowerCase().replace(/(^|[0-9\- ])([a-z])/g, (match, p1, p2) => {
         return p1 + p2.toUpperCase()
     })
-}
-
-
-function search(name) {
-    const elementName = name ?? document.getElementById("search").value.trim()
-    let id = getId(elementName)
-    if (id === -1) {
-        id = getId(formatElement(formatBack(elementName)))
-    }
-    if (id !== -1) {
-        addSolutions(id)
-    }
 }
 
 
