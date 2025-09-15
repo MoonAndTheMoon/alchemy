@@ -38,7 +38,7 @@ var eventElements = ["ferns", "cider donut", "silo door", "spices", "pecan", "ga
   // Event button
   if (eventElements.length) {
     const eventBtn = Create( "button", { assign:{ innerText: eventName }, style:{ backgroundColor: eventBackgroundColor, color: eventFontColor } } )
-    eventBtn.addEventListener( "click", () => eventElements.forEach( name => search(name, true) ) )
+    eventBtn.addEventListener( "click", () => eventElements.reverse().forEach( name => search(name, true) ) )
     Append( titleRow, eventBtn )
   }
 
@@ -347,7 +347,7 @@ function downloadVariousElementCacheFiles () {
     
     downloadElements( "double.txt", doubleSelfMerge, 80, 10, true )
     downloadElements( "triple.txt", tripleSelfMerge, 80, 10, true )
-    downloadElements( "quadruple.txt", quadrupleSelfMerge, 80, 10, true )
+    downloadElements( "quad.txt", quadrupleSelfMerge, 80, 10, true )
     downloadElements( "twoUnique.txt", twoUniqueMerge, 116, 30, false )
   }
 }
@@ -467,7 +467,7 @@ function addEventSolutions() {
 
 
 function addCombination(combination, solution) {
-  console.log(combination, solution)
+  //console.log(combination, solution)
   const packed = []
   let lastId = combination[0]
   let count = 1
@@ -503,8 +503,6 @@ function addCombination(combination, solution) {
 
 function addSolutions(resultId, afterNode) {
   const id = typeof resultId === "number" ? formatBack(getName(resultId)) : resultId
-  console.log(resultId, id)
-  //return
 
   const alreadyExistingDiv = document.querySelector(`[data-id="${id}"]`)
   if (alreadyExistingDiv) {
@@ -529,7 +527,7 @@ function addSolutions(resultId, afterNode) {
 
   const recipeResult = createElementSpan(resultId, false)
   const elementListLoaded = !!elementsByName.size
-  const className = elementListLoaded ? ( elementsByName.get( getName(resultId).toLowerCase() ) ? "have" : "missing" ) : null
+  const className = elementListLoaded ? ( elementsByName.get( getName(resultId)?.toLowerCase() ) ? "have" : "missing" ) : null
   if ( className )
     recipeResult.classList.add(className)
   recipeResult.classList.add("result")
@@ -549,7 +547,7 @@ function addSolutions(resultId, afterNode) {
   if ( afterNode )
     afterNode.after(solution)
   else
-    document.querySelector("#solutions").appendChild(solution)
+    document.querySelector("#solutions").prepend(solution)
 }
 
 
@@ -662,9 +660,17 @@ function endsWithSearch(query, words, limit=50) {
 
 
 function regExpSearch(query, words, limit=50) {
-    if (!query) return []
     query = query.toLowerCase()
-    return words.filter( word => word.toLowerCase().match(query) ).slice(0, limit)
+    
+    try {
+      if (!query)
+        return []
+      const re = new RegExp(query)
+      return words.filter( word => word.toLowerCase().match(query) ).slice(0, limit)
+      
+    } catch (e) {
+      return []
+    }
 }
 
 
@@ -858,7 +864,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     // Enable the search button
     const searchBtn = document.querySelector("#searchbtn")
-    searchBtn.addEventListener("click", search)
+    searchBtn.addEventListener( "click", () => search() )
     
     // Set search method
     searchMethod = searchMethods[ document.querySelector("#search-method").selectedIndex ]
