@@ -10,10 +10,11 @@ var limit = 100
 
 // Game Event
 
-var eventName = "Harvest 2025"
+var eventName = "Halloween"
 var eventBackgroundColor = "brown"
-var eventFontColor = "orange"
-var eventElements = ["ferns", "cider donut", "silo door", "spices", "pecan", "gala apple", "kale", "pinecone", "mushroom", "sage", "pestle", "chickens", "grape", "wheat bundle", "chestnut", "plant nursery", "persimmon", "marshmallow", "brussels sprout", "ear of corn", "cotton boll", "fossil record", "venus flytrap", "fall frost", "beech nut", "harvest moon", "acorn squash", "root vegetable", "plum", "hickory nut", "mossy pumpkin", "cauliflower", "blackberry", "shovel", "hayride", "dried corn", "crop science", "acorn", "orange leaf", "marmalade", "sunflower head", "wagon axle", "straw bale", "pumpkin spice", "corn silk", "maple leaf", "pumpkin", "pomegranate", "corn husk doll", "scarecrow hat", "clove", "cranberry", "grillmaster", "dietitian", "maize ear", "pear", "fairy garden", "turnip", "cob", "batch", "carrot", "mulberry", "haymow", "cocoa beans", "farm silo", "walnut", "pumpkin head", "plowing furrow", "brown leaf", "scarecrow", "cider", "chamomile", "indian corn", "blueberry", "rye sheaf", "mother nature", "maize husk", "gourd", "raincoat", "tall cornstalk", "apple", "beet", "parsnip", "cinnamon stick", "fish farming", "bramble", "rusty tractor", "aloe", "honeycrisp apple", "thyme", "corn", "bait basket", "pepper", "wheat sheaf", "rutabaga", "harvesting", "maize", "dried leaf", "hazelnut", "hay bale", "squash", "quince", "cobweb", "sweet potato", "fig"]
+var eventFontColor = "yellow"
+var eventBorderColor = "orange"
+var eventElements = ["moonlit night", "crypt door", "enchanted forest", "candy apple", "witch's brew", "skeleton bones", "graveyard", "total eclipse", "witch hat", "autumnal", "ghost story", "ghoul dance", "wicked grin", "night scream", "poultrygeist", "midnight shadow", "marrow", "curse", "spell book", "blood moon", "enchanted scar", "scarecrow figure", "witch dagger event", "eerie glow", "darkness", "broomstick ride", "haunted corridor", "black cat", "ghost fleet", "nightshade flower", "cobwebs", "dark shadows", "chupacabra", "pumpkin patch", "shadow", "creak", "hex symbol", "phantom gust", "cackle sound", "witchcraft", "night specter", "candle flicker", "dark forest", "cauldron brew", "creepy silhouette", "witch dagger", "jack o lantern", "trick-or-treat", "eerie fog", "autumn", "moonrise watch", "skeleton skull", "spellcaster", "fogbow", "witch's dagger", "enchanting spell", "talisman charm", "hallowen", "demon's claw", "spider eye", "witch talon", "skeleton", "broomstick", "phantom shadow", "specter", "ghostly", "spectral fog", "bats flying", "cauldron", "witch's wand", "haunted mansion", "phantom", "mysterious fog", "mystic crystal", "ghostly figure", "spooky sound", "ghostly whisper", "spider", "hellish bog", "black candle", "autumn leaves", "curtain of fog", "ghost costume", "enchanted mirror", "raven", "fossilization", "mystic potion", "shadow figure", "moonlit", "voodoo", "haunted mirror", "full moon", "witch's charm", "moonshine", "night storm", "falling leaf", "spider web", "midnight bell", "cursed object", "mask", "midnight hour", "owl feather", "bewitching chant", "haunted house", "bloodstained dagger", "halloween"]
 
 
 // Add UI
@@ -37,7 +38,7 @@ var eventElements = ["ferns", "cider donut", "silo door", "spices", "pecan", "ga
   
   // Event button
   if (eventElements.length) {
-    const eventBtn = Create( "button", { assign:{ innerText: eventName }, style:{ backgroundColor: eventBackgroundColor, color: eventFontColor } } )
+    const eventBtn = Create( "button", { assign:{ innerText: eventName }, style:{ backgroundColor: eventBackgroundColor, color: eventFontColor, borderColor: eventBorderColor } } )
     eventBtn.addEventListener( "click", () => eventElements.reverse().forEach( name => search(name, true) ) )
     Append( titleRow, eventBtn )
   }
