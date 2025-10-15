@@ -39,7 +39,7 @@ var eventElements = ["moonlit night", "crypt door", "enchanted forest", "candy a
   // Event button
   if (eventElements.length) {
     const eventBtn = Create( "button", { assign:{ innerText: eventName }, style:{ backgroundColor: eventBackgroundColor, color: eventFontColor, borderColor: eventBorderColor } } )
-    eventBtn.addEventListener( "click", () => eventElements.reverse().forEach( name => search(name, true) ) )
+    eventBtn.addEventListener( "click", () => eventElements.slice().reverse().forEach( name => search(name, true) ) )
     Append( titleRow, eventBtn )
   }
 
