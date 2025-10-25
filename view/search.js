@@ -14,24 +14,59 @@ var eventName = "Halloween"
 var eventBackgroundColor = "brown"
 var eventFontColor = "yellow"
 var eventBorderColor = "orange"
-var eventElements = ["moonlit night", "crypt door", "enchanted forest", "candy apple", "witch's brew", "skeleton bones", "graveyard", "total eclipse", "witch hat", "autumnal", "ghost story", "ghoul dance", "wicked grin", "night scream", "poultrygeist", "midnight shadow", "marrow", "curse", "spell book", "blood moon", "enchanted scar", "scarecrow figure", "witch dagger event", "eerie glow", "darkness", "broomstick ride", "haunted corridor", "black cat", "ghost fleet", "nightshade flower", "cobwebs", "dark shadows", "chupacabra", "pumpkin patch", "shadow", "creak", "hex symbol", "phantom gust", "cackle sound", "witchcraft", "night specter", "candle flicker", "dark forest", "cauldron brew", "creepy silhouette", "witch dagger", "jack o lantern", "trick-or-treat", "eerie fog", "autumn", "moonrise watch", "skeleton skull", "spellcaster", "fogbow", "witch's dagger", "enchanting spell", "talisman charm", "samhain", "demon's claw", "spider eye", "witch talon", "skeleton", "broomstick", "phantom shadow", "specter", "ghostly", "spectral fog", "bats flying", "cauldron", "witch's wand", "haunted mansion", "phantom", "mysterious fog", "mystic crystal", "ghostly figure", "spooky sound", "ghostly whisper", "spider", "hellish bog", "black candle", "autumn leaves", "curtain of fog", "ghost costume", "enchanted mirror", "raven", "fossilization", "mystic potion", "shadow figure", "moonlit", "voodoo", "haunted mirror", "full moon", "witch's charm", "moonshine", "night storm", "falling leaf", "spider web", "midnight bell", "cursed object", "mask", "midnight hour", "owl feather", "bewitching chant", "haunted house", "bloodstained dagger", "halloween"]
+var eventElements = ["moonlit night", "crypt door", "enchanted forest", "candy apple", "witch's brew", "skeleton bones", "graveyard", "total eclipse", "witch hat", "autumnal", "ghost story", "ghoul dance", "wicked grin", "night scream", "poultrygeist", "midnight shadow", "marrow", "curse", "spell book", "blood moon", "enchanted scar", "scarecrow figure", "pentagram", "eerie glow", "darkness", "broomstick ride", "haunted corridor", "black cat", "ghost fleet", "nightshade flower", "cobwebs", "dark shadows", "chupacabra", "pumpkin patch", "shadow", "creak", "hex symbol", "phantom gust", "cackle sound", "witchcraft", "night specter", "candle flicker", "dark forest", "cauldron brew", "creepy silhouette", "witch dagger", "jack o lantern", "trick-or-treat", "eerie fog", "autumn", "moonrise watch", "skeleton skull", "spellcaster", "fogbow", "witch's dagger", "enchanting spell", "talisman charm", "samhain", "demon's claw", "spider eye", "witch talon", "skeleton", "broomstick", "phantom shadow", "specter", "ghostly", "spectral fog", "bats flying", "cauldron", "witch's wand", "haunted mansion", "phantom", "mysterious fog", "mystic crystal", "ghostly figure", "spooky sound", "ghostly whisper", "spider", "hellish bog", "black candle", "autumn leaves", "curtain of fog", "ghost costume", "enchanted mirror", "raven", "fossilization", "mystic potion", "shadow figure", "moonlit", "voodoo", "haunted mirror", "full moon", "witch's charm", "moonshine", "night storm", "falling leaf", "spider web", "midnight bell", "cursed object", "mask", "midnight hour", "owl feather", "bewitching chant", "haunted house", "bloodstained dagger", "halloween", "banshee scream", "cauldron steam", "spirited dance", "vampire", "enchanted grave", "necronomicon", "mystic chant", "ghoul", "candelabrum", "cackle"]
+
+
+// Actions
+
+function sortSolutionsAscending() {
+  Replace( Get("#solutions"), Array.from(Get("#solutions").children).sort( (a,b) => a.dataset.id > b.dataset.id ) )
+}
+
+function sortSolutionsDescending() {
+  Replace( Get("#solutions"), Array.from(Get("#solutions").children).sort( (a,b) => a.dataset.id < b.dataset.id ) )
+}
+
+function clearAllSolutions() {
+  Replace( Get("#solutions") )
+}
 
 
 // Add UI
+
 {
   const titleRow = Create( "div", { assign:{ id: "titleRow" } } )
+  document.querySelector("body > div.container").prepend( titleRow )
 
-  // Move title here
-  const h1 = document.querySelector("body > .container > h1")
-  h1.remove()
+  const h1 = Create( "h1", { assign:{ innerText: "Element search" } } )
   Append( titleRow, h1 )
-
+  
+  // Acton Menu
+  const actionItems = [
+    { name: "Actions", fn: () => null, options:{ style:{ display: "none" } } },
+    { name: "Sort Asc", fn: () => sortSolutionsAscending() },
+    { name: "Sort Desc", fn: () => sortSolutionsDescending() },
+    { name: "Clear All", fn: () => clearAllSolutions() },
+    { name: "Open elements", fn: () => importData(loadElements) },
+    //{ name: "document.write", fn: () => document.write() },
+  ]
+  const actionMenu = Create( "select", { assign:{ id: "action-menu" }, attr:{ tabIndex: -1 }, classes:["actionmenu"] } )
+  actionMenu.addEventListener( "change", ev => {
+    actionItems[ev.target.selectedIndex].fn()
+    ev.target.selectedIndex = 0
+  } )
+  Append(
+    actionMenu,
+    ...actionItems.map( (action, i) => Create( "option", Assign( { assign:{ innerText:action.name, value: i } }, action.options ?? {} ) ) )
+  )
+  Append( titleRow, actionMenu )
+  
   // Load elements button
   const loadBtn = Create( "button", { assign:{ innerText: "Load element list" }, attr:{ tabIndex: -1 } } )
   loadBtn.addEventListener( "click", () => importData(loadElements) )
-  Append( titleRow, loadBtn )
+  //Append( titleRow, loadBtn )
 
-  // Load elements button
+  // Random button
   const randomBtn = Create( "button", { assign:{ innerText: "10 Random" }, attr:{} } )
   randomBtn.addEventListener( "click", () => addRandomSolutions(10) )
   Append( titleRow, randomBtn )
@@ -43,7 +78,7 @@ var eventElements = ["moonlit night", "crypt door", "enchanted forest", "candy a
     Append( titleRow, eventBtn )
   }
 
-  document.querySelector("body > div.container").prepend( titleRow )
+  
 }
 
 
@@ -118,8 +153,8 @@ function _create_element(config, index, ...children) {
     elem.style[k] = getValue(k, index, style)
   for (const k in assign)
     Assign(elem, { [k]: getValue(k, index, assign) })
-  for (const k in classes)
-    elem.classList.add( getValue(k, index, classes) )
+  for (const className of classes ?? [])
+    elem.classList.add( className )
 
   Append(elem, ...children.flat())
   return elem
@@ -160,14 +195,27 @@ function Create(tag, config, ...children) {
 }
 
 
+// Helpers
+
+function Get(selector, node) {
+  return (node ? node : document).querySelector(selector)
+}
+
+function GetAll(selector, node) {
+  return (node ? node : document).querySelectorAll(selector)
+}
+
 function Assign(...args) {
   return Object.assign(...args)
 }
 
-
 function Append(node, ...children) {
   node.append(...children.flat())
   return node
+}
+
+function Replace(node, ...children) {
+  return node.replaceChildren(...children.flat()), node
 }
 
 
@@ -505,9 +553,14 @@ function addCombination(combination, solution) {
 function addSolutions(resultId, afterNode) {
   const id = typeof resultId === "number" ? formatBack(getName(resultId)) : resultId
 
-  const alreadyExistingDiv = document.querySelector(`[data-id="${id}"]`)
-  if (alreadyExistingDiv) {
-    flashDiv(alreadyExistingDiv)
+  const existingSolution = document.querySelector(`[data-id="${id}"]`)
+  if (existingSolution) {
+    if ( afterNode ) {
+      existingSolution.remove()
+      afterNode.after(existingSolution)
+    }
+    
+    flashDiv(existingSolution)
     return
   }
 
@@ -695,7 +748,7 @@ function mkAutocomplete(input, allowNew=false) {
     }
 
     function clearSuggestions() {
-        suggestionBox.innerHTML = ""
+        suggestionBox.replaceChildren()
         container.style.display = "none"
         activeIndex = 0
     }

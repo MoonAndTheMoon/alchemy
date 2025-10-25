@@ -41,6 +41,14 @@ select {
   color: #000;
 }
 
+select.actionmenu {
+  font-size: 14px;
+  padding: 2px;
+  background-color: rgb(54, 68, 108);
+  color: #fff;
+  border: solid cyan 1px;
+}
+
 input[type=text] {
   width: 200px;
   margin-left: 8px;
@@ -235,7 +243,6 @@ p {
   padding-bottom: 80px;
   margin-top: 5px;
 }
-
 
 
 
