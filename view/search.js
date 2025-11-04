@@ -27,6 +27,10 @@ function sortSolutionsDescending() {
   Replace( Get("#solutions"), Array.from(Get("#solutions").children).sort( (a,b) => a.dataset.id < b.dataset.id ) )
 }
 
+function reverseSolutions() {
+  Replace( Get("#solutions"), Array.from(Get("#solutions").children).reverse() )
+}
+
 function clearAllSolutions() {
   Replace( Get("#solutions") )
 }
@@ -43,17 +47,19 @@ function clearAllSolutions() {
   
   // Acton Menu
   const actionItems = [
-    { name: "Actions", fn: () => null, options:{ style:{ display: "none" } } },
+    { name: "Tools", fn: () => null, options:{ style:{ display: "none" } } },
     { name: "Sort Asc", fn: () => sortSolutionsAscending() },
     { name: "Sort Desc", fn: () => sortSolutionsDescending() },
+    { name: "Reverse", fn: () => reverseSolutions() },
     { name: "Clear All", fn: () => clearAllSolutions() },
-    { name: "Open elements", fn: () => importData(loadElements) },
+    { name: "Open Elements", fn: () => importData(loadElements) },
     //{ name: "document.write", fn: () => document.write() },
   ]
-  const actionMenu = Create( "select", { assign:{ id: "action-menu" }, attr:{ tabIndex: -1 }, classes:["actionmenu"] } )
+  const actionMenu = Create( "select", { assign:{ id: "action-menu" }, attr:{ tabIndex: -1 }, classes:["actionmenu"], style:{ width: "60px" } } )
   actionMenu.addEventListener( "change", ev => {
     actionItems[ev.target.selectedIndex].fn()
     ev.target.selectedIndex = 0
+    ev.target.blur()
   } )
   Append(
     actionMenu,
@@ -210,7 +216,12 @@ function Assign(...args) {
 }
 
 function Append(node, ...children) {
-  node.append(...children.flat())
+  node.append( ...children.flat() )
+  return node
+}
+
+function Prepend(node, ...children) {
+  node.prepend( ...children.flat() )
   return node
 }
 
@@ -538,8 +549,9 @@ function addCombination(combination, solution) {
 
     const element = createElementSpan(item.id)
     const className = elementsByName.size ? ( elementsByName.get( getName(item.id).toLowerCase() ) ? "have" : "missing" ) : null
-    if ( className )
+    if ( className ) {
       element.classList.add(className)
+    }
     element.classList.add("ingredient")
     solution.appendChild(element)
 
@@ -555,9 +567,12 @@ function addSolutions(resultId, afterNode) {
 
   const existingSolution = document.querySelector(`[data-id="${id}"]`)
   if (existingSolution) {
+    existingSolution.remove()
+    
     if ( afterNode ) {
-      existingSolution.remove()
       afterNode.after(existingSolution)
+    } else {
+      Get("#solutions").prepend(existingSolution)
     }
     
     flashDiv(existingSolution)

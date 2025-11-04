@@ -46,7 +46,7 @@ select.actionmenu {
   padding: 2px;
   background-color: rgb(54, 68, 108);
   color: #fff;
-  border: solid cyan 1px;
+  border: solid lightseagreen 1px;
 }
 
 input[type=text] {
@@ -186,7 +186,7 @@ p {
 }
 
 .element.result.missing {
-  border: solid 2px orange;
+/*   border: solid 2px orange; */
 }
 
 .element.ingredient {
@@ -202,7 +202,7 @@ p {
 }
 
 .element.ingredient.missing {
-  border: solid 1px #df8d41;
+/*   border: solid 1px #df8d41; */
 /*   background-color: #cf8851; */
 }
 
