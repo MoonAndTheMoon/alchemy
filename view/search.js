@@ -10,11 +10,11 @@ var limit = 100
 
 // Game Event
 
-var eventName = "Halloween"
-var eventBackgroundColor = "brown"
-var eventFontColor = "yellow"
-var eventBorderColor = "orange"
-var eventElements = []
+var eventName = "❄️ Winter 🌲"
+var eventBackgroundColor = "#29abf9"
+var eventFontColor = "white"
+var eventBorderColor = "white"
+var eventElements = ["2025","ornament","snowman hat","tinsel garland","holiday gourmet","candyfloss","christmas ornament","new year celebration","party hat","saturnalia","tinsel","christmas","magi","sleigh","sugarplum","christmas gift","festive mug","valentine's day","june","santa claus","carol song","holiday","winter landscape","yuletide","reindeer hoof","nutcracker","sweater","winter snowflake","santa workshop","alice's dream","mistletoe branch","coal","tradition","wreath","celebration spark","twelve","holly bush","santa sleigh","fa-la-la","final countdown","present","glitter","eve","celebration","mistletoe","santa beard","fiery cup","christmas stocking","family","christmas carol","new year","stocking","snowball","santa surprise","new year toast","holiday shimmer","truth","new year confetti","angel","new year resolution","december","blitzen","winter","glittering ornament","holiday fireplace","reindeer hoofprint","wish","ice skate","candle","cherry ornament","ornament hook","rudolph","holiday cheer","donner","holiday spirit","vixen","frostbite","festivus","hotel lobby","wrapping","chestnut roast","cookie","party","new year fireworks","excitement","chimney","snowflake","winter coat","reindeer","caroler","specialty cookie","santa hat","fruitcake","wrap","magic","chimney sweep","winter gloves","fireworks","toy","new year countdown","dreamception","caroling","yule","jingle bell","new year party"]
 
 
 // Actions
