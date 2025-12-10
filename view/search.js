@@ -6,6 +6,7 @@ var elementsByName = new Map()
 var searchMethods = [fuzzySearch, containsSearch, startsWithSearch, endsWithSearch, regExpSearch]
 var searchMethod = fuzzySearch
 var limit = 100
+var enableAddAll = false
 
 
 // Game Event
@@ -35,6 +36,16 @@ function clearAllSolutions() {
   Replace( Get("#solutions") )
 }
 
+function toggleAddAll() {
+  window.enableAddAll = !window.enableAddAll
+  if ( window.enableAddAll ) {
+    Get("#searchbtn").textContent = "Add All"
+  }
+  else {
+    Get("#searchbtn").textContent = "Add"
+  }
+}
+
 
 // Add UI
 
@@ -52,6 +63,7 @@ function clearAllSolutions() {
     { name: "Sort Desc", fn: () => sortSolutionsDescending() },
     { name: "Reverse", fn: () => reverseSolutions() },
     { name: "Clear All", fn: () => clearAllSolutions() },
+    { name: "Toggle Add All", fn: () => toggleAddAll() },
     { name: "Open Elements", fn: () => importData(loadElements) },
     //{ name: "document.write", fn: () => document.write() },
   ]
@@ -670,7 +682,7 @@ function updateElementStatus() {
 
 // Search
 
-function fuzzySearch(query, words, limit = 50) {
+function fuzzySearch(query, words, limit=50) {
     if (!query) return []
 
     query = query.toLowerCase()
@@ -743,6 +755,12 @@ function regExpSearch(query, words, limit=50) {
 }
 
 
+function addAllResults() {
+  const allResults = searchMethods[Get("#search-method").selectedIndex](Get("#search").value, window.data.namesSorted, 10_000_000)
+  allResults.reverse().forEach( result => search(result) )
+}
+
+
 function mkAutocomplete(input, allowNew=false) {
     const container = document.createElement("div")
     container.classList.add("autocomplete-container")
@@ -756,21 +774,21 @@ function mkAutocomplete(input, allowNew=false) {
     let activeIndex = 0 // Erstes Element immer aktiv
 
     function updatePosition() {
-        const rect = input.getBoundingClientRect()
-        container.style.top = `${rect.bottom + window.scrollY}px`
-        container.style.left = `${rect.left + window.scrollX}px`
-        container.style.width = `${rect.width}px`
+      const rect = input.getBoundingClientRect()
+      container.style.top = `${rect.bottom + window.scrollY}px`
+      container.style.left = `${rect.left + window.scrollX}px`
+      container.style.width = `${rect.width}px`
     }
 
     function clearSuggestions() {
-        suggestionBox.replaceChildren()
-        container.style.display = "none"
-        activeIndex = 0
+      suggestionBox.replaceChildren()
+      container.style.display = "none"
+      activeIndex = 0
     }
 
     document.getElementById("search-method").addEventListener("change", function () {
-        searchMethod = searchMethods[this.selectedIndex]
-        input.dispatchEvent(new Event("input"))
+      searchMethod = searchMethods[this.selectedIndex]
+      input.dispatchEvent(new Event("input"))
     })
 
     input.addEventListener("input", function () {
@@ -778,10 +796,19 @@ function mkAutocomplete(input, allowNew=false) {
         if (!query) {
             clearSuggestions()
             lastResults = []
+            Get("#searchbtn").textContent = window.enableAddAll ? "Add All" : "Add"
             return
         }
 
         let results = searchMethod(query, window.data.namesSorted, 100)
+        
+        if ( window.enableAddAll && results.length ) {
+          const maxResults = searchMethod(query, window.data.namesSorted, 10_000_000)
+          Get("#searchbtn").textContent = "Add All " + maxResults.length
+        }
+        else if ( window.enableAddAll ) {
+          Get("#searchbtn").textContent = "Add All"
+        }
 
         if (JSON.stringify(results) === JSON.stringify(lastResults)) {
             // Vorschläge haben sich nicht geändert → Verhindert Flackern
@@ -933,7 +960,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     // Enable the search button
     const searchBtn = document.querySelector("#searchbtn")
-    searchBtn.addEventListener( "click", () => search() )
+    searchBtn.addEventListener( "click", () => window.enableAddAll ? addAllResults() : search() )
     
     // Set search method
     searchMethod = searchMethods[ document.querySelector("#search-method").selectedIndex ]

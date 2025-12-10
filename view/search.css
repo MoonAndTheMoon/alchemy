@@ -167,6 +167,7 @@ p {
 
 .element {
   user-select: text;
+  white-space: preserve;
   height: 100%;
   cursor: pointer;
 /*   border: solid rgb(80, 66, 110) 2px; */
