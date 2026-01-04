@@ -302,7 +302,7 @@ function getExcelExport(rows, header) {
 
 // Download Stuff
 
-function downloadElements(fileName, elementNames, maxPageSize=116, maxPages=20, randomOrder=false) {
+function downloadElements(fileName, elementNames, maxPageSize=116, maxPages=5, randomOrder=false) {
   const { keys, assign } = Object
   const { floor, random } = Math
 
@@ -315,6 +315,9 @@ function downloadElements(fileName, elementNames, maxPageSize=116, maxPages=20, 
       const randomIndex = randomOrder ? floor( random() * elementNames.length ) : 0
       pickedElements.push( elementNames[randomIndex] )
       elementNames.splice(randomIndex, 1)
+    }
+    if ( pickedElements.length < 120 && elementsByName.has("0") && !~pickedElements.indexOf("0") ) {
+      pickedElements.unshift("0")
     }
 
     const text = JSON.stringify(pickedElements)
@@ -336,10 +339,10 @@ function downloadVariousElementCacheFiles () {
   const quadrupleSelfMerge = []
   const twoUniqueMerge = []
 
-  const doubleUsed = Object.create(null)
-  const tripleUsed = Object.create(null)
-  const quadUsed = Object.create(null)
-  let twoUniqueUsed = Object.create(null)
+  const doubleUsed = new Set()
+  let twoUniqueUsed = new Set()
+  const tripleUsed = new Set()
+  const quadUsed = new Set()
 
   for ( const [resultId, recipes] of entries(data.create) ) {
     const recipe = recipes?.[0]
@@ -353,23 +356,23 @@ function downloadVariousElementCacheFiles () {
       const id2 = recipe[1]
       const name1 = data.names[id1].toLowerCase()
       const name2 = data.names[id2].toLowerCase()
-      const allAvailableUnique = !(twoUniqueUsed[name1] ?? twoUniqueUsed[name2])
-      const allAvailableDouble = !(doubleUsed[name1] ?? doubleUsed[name2])
+      const allAvailableUnique = !( twoUniqueUsed.has(name1) ?? twoUniqueUsed.has(name2) )
+      const allAvailableDouble = !( doubleUsed.has(name1) ?? doubleUsed.has(name2) )
       const allOwned = !!(elementsByName.get(name1) && elementsByName.get(name2))
       const allDifferent = id1 !== id2
       const allSame = id1 === id2
 
       if ( allOwned && allAvailableUnique && allDifferent ) {
-        twoUniqueUsed[name1] = true
-        twoUniqueUsed[name2] = true
+        twoUniqueUsed.add(name1)
+        twoUniqueUsed.add(name2)
         twoUniqueMerge.push(name1, name2)
 
         if ( twoUniqueMerge % 116 === 0 ) {
-          twoUniqueUsed = Object.create(null)
+          twoUniqueUsed.clear()
         }
       }
       else if ( allOwned && allAvailableDouble && allSame ) {
-        doubleUsed[name1] = true
+        doubleUsed.add(name1)
         doubleSelfMerge.push(name1)
       }
     }
@@ -380,14 +383,14 @@ function downloadVariousElementCacheFiles () {
       const name1 = data.names[id1].toLowerCase()
       const name2 = data.names[id2].toLowerCase()
       const name3 = data.names[id3].toLowerCase()
-      const allAvailable = !(tripleUsed[name1] ?? tripleUsed[name2] ?? tripleUsed[name3])
-      const allOwned = !!(elementsByName.get(name1) && elementsByName.get(name2) && elementsByName.get(name3))
+      const allAvailable = !( tripleUsed.has(name1) ?? tripleUsed.has(name2) ?? tripleUsed.has(name3) )
+      const allOwned = !!( elementsByName.get(name1) && elementsByName.get(name2) && elementsByName.get(name3) )
       const allDifferent = id1 !== id2 && id1 !== id3 && id2 !== id3
       const allSame = id1 === id2 && id2 === id3
 
 
       if ( allOwned && allAvailable && allSame ) {
-        tripleUsed[name1] = true
+        tripleUsed.add(name1)
         tripleSelfMerge.push(name1)
       }
     }
@@ -400,13 +403,13 @@ function downloadVariousElementCacheFiles () {
       const name2 = data.names[id2].toLowerCase()
       const name3 = data.names[id3].toLowerCase()
       const name4 = data.names[id4].toLowerCase()
-      const allAvailable = !(quadUsed[name1] ?? quadUsed[name2] ?? quadUsed[name3] ?? quadUsed[name4])
-      const allOwned = !!(elementsByName.get(name1) && elementsByName.get(name2) && elementsByName.get(name3) && elementsByName.get(name4))
+      const allAvailable = !( quadUsed.has(name1) ?? quadUsed.has(name2) ?? quadUsed.has(name3) ?? quadUsed.has(name4) )
+      const allOwned = !!( elementsByName.get(name1) && elementsByName.get(name2) && elementsByName.get(name3) && elementsByName.get(name4) )
       const allDifferent = id1 !== id2 && id1 !== id3 && id1 !== id4 && id2 !== id3 && id2 !== id4 && id3 !== id4
       const allSame = id1 === id2 && id2 === id3 && id3 === id4
 
       if ( allOwned && allAvailable && allSame ) {
-        quadUsed[name1] = true
+        quadUsed.add(name1)
         quadrupleSelfMerge.push(name1)
       }
     }
@@ -417,11 +420,78 @@ function downloadVariousElementCacheFiles () {
     console.log(quadrupleSelfMerge)
     console.log(twoUniqueMerge)
     
-    downloadElements( "double.txt", doubleSelfMerge, 80, 10, true )
-    downloadElements( "triple.txt", tripleSelfMerge, 80, 10, true )
-    downloadElements( "quad.txt", quadrupleSelfMerge, 80, 10, true )
-    downloadElements( "twoUnique.txt", twoUniqueMerge, 116, 30, false )
+    downloadElements( "AA.txt", doubleSelfMerge, 80, 10, true )
+    downloadElements( "AAA.txt", tripleSelfMerge, 80, 10, true )
+    downloadElements( "AAAA.txt", quadrupleSelfMerge, 80, 10, true )
+    downloadElements( "AB.txt", twoUniqueMerge, 116, 30, false )
   }
+}
+
+
+function downloadTopAB( minPageSize=120 ) {
+  const { entries, keys } = Object
+	const usedCounts = new Map()
+	
+	for ( const [resultId, recipes] of entries(data.create) ) {
+    const recipe = recipes?.[0]
+    const resultName = data.names[resultId].toLowerCase()
+    const ownsResult = !!elementsByName.get(resultName)
+    if (!recipe || ownsResult || recipe.length != 2)
+      continue
+		const id1 = recipe[0]
+		const id2 = recipe[1]
+		const name1 = data.names[id1].toLowerCase()
+		const name2 = data.names[id2].toLowerCase()
+		//const allAvailable = !( used.has(name1) ?? used.has(name2) )
+		const allOwned = !!(elementsByName.get(name1) && elementsByName.get(name2))
+		const allDifferent = id1 !== id2
+		//const allSame = id1 === id2
+
+		if ( allOwned && allDifferent /*&& allAvailable*/ ) {
+			usedCounts.set( name1, 1 + (usedCounts.get(name1) ?? 0) )
+			usedCounts.set( name2, 1 + (usedCounts.get(name2) ?? 0) )
+			//used.add(name1)
+		}
+  }
+	
+	const includedA = new Set( Array.from(usedCounts.entries())
+		.sort( (a, b) => b[1] - a[1] )
+		.filter( ent => ent[1] >= /*minPageSize*/ 1000 )
+		.map( ent => ent[0] )
+	)
+
+  const results = new Map()
+	includedA.forEach( key => results.set( key, new Set() ) )
+	
+  for ( const [resultId, recipes] of entries(data.create) ) {
+    const recipe = recipes?.[0]
+    const resultName = data.names[resultId].toLowerCase()
+    const ownsResult = !!elementsByName.get(resultName)
+    if (!recipe || ownsResult || recipe.length != 2)
+      continue
+		const id1 = recipe[0]
+		const id2 = recipe[1]
+		const name1 = data.names[id1].toLowerCase()
+		const name2 = data.names[id2].toLowerCase()
+		const allOwned = !!(elementsByName.get(name1) && elementsByName.get(name2))
+		const allDifferent = id1 !== id2
+
+		if ( allOwned && allDifferent ) {
+			if ( includedA.has(name1) ) {
+				results.get(name1).add(name2)
+			}
+			if ( includedA.has(name2) ) {
+				results.get(name2).add(name1)
+			}
+		}
+  }
+	
+	for ( const [A, resultB] of results.entries() ) {
+		const elements = Array.from( resultB.keys() )
+		elements.length = elements.length - elements.length % minPageSize
+		//console.log(elements)
+		downloadElements( String(A) + ".txt", elements, minPageSize, 20, true )
+	}
 }
 
 
@@ -976,5 +1046,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+/*
 
+*/
 
