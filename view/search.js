@@ -11,11 +11,11 @@ var enableAddAll = false
 
 // Game Event
 
-var eventName = "❄️ Winter 🌲"
-var eventBackgroundColor = "#29abf9"
+var eventName = "🏈️ Super Bowl 🏟"
+var eventBackgroundColor = "brown"
 var eventFontColor = "white"
 var eventBorderColor = "white"
-var eventElements = ["2025","ornament","snowman hat","tinsel garland","holiday gourmet","candyfloss","christmas ornament","new year celebration","party hat","saturnalia","tinsel","christmas","magi","sleigh","sugarplum","christmas gift","festive mug","valentine's day","june","santa claus","carol song","holiday","winter landscape","yuletide","reindeer hoof","nutcracker","sweater","winter snowflake","santa workshop","alice's dream","mistletoe branch","coal","tradition","wreath","celebration spark","twelve","holly bush","santa sleigh","fa-la-la","final countdown","present","glitter","eve","celebration","mistletoe","santa beard","fiery cup","christmas stocking","family","christmas carol","new year","stocking","snowball","santa surprise","new year toast","holiday shimmer","truth","new year confetti","angel","new year resolution","december","blitzen","winter","glittering ornament","holiday fireplace","reindeer hoofprint","wish","ice skate","candle","cherry ornament","ornament hook","rudolph","holiday cheer","donner","holiday spirit","vixen","frostbite","festivus","hotel lobby","wrapping","chestnut roast","cookie","party","new year fireworks","excitement","chimney","snowflake","winter coat","reindeer","caroler","specialty cookie","santa hat","fruitcake","wrap","magic","chimney sweep","winter gloves","fireworks","toy","new year countdown","dreamception","caroling","yule","jingle bell","new year party"]
+var eventElements = ["ultimate quarterback","pit crew","mvp","super bowl ring","halftime","cheerleader","coaching staff","sports stadium","player injury","football club","pylon marker","sideline","rushing","game strategy","quarterback","concession stand","hat-trick","super fan badge","seattle","team mascot","halftime cheer","vince","receiver","championship","video tribute","team jersey","gridiron","blitz","concourse lounge","fan section","spectator cheer","safety","super bowl lx","playbook diagram","playoff","halftime show","playoff game","mvp award","game clock","helmet","punt","game day","doubleheader game","pigskin ball","draft day","football field","play action","sports memorabilia","championship trophy","scoreboard light","player jersey","stadium seating","sports injury","referee whistle","bad bunny","linebacker","sports analyst","punt return","line of scrimmage","overtime period","super bowl anthem","chiefs","rams","bonus yardage","spectator","sideline reporter","play clock","offensive line","49ers","spectator section","stadium","infrared view","american football","linebacker stance","scoreboard display","tailgate grill","highlight","eagles","timeout","football pass","sports commentator","chief rival","draft pick","seahawks","clutch catch","vault boy","superbowl","lombardi trophy","team logo","playoff berth","sports broadcast","referee","field goal","crowd chant","football helmet","tailgate party","interception","defensive back","touchdown","super bowl","team flag","field goal post","victory celebration","fan merchandise","training camp"]
 
 
 // Actions
@@ -53,7 +53,7 @@ function toggleAddAll() {
   const titleRow = Create( "div", { assign:{ id: "titleRow" } } )
   document.querySelector("body > div.container").prepend( titleRow )
 
-  const h1 = Create( "h1", { assign:{ innerText: "Element search" } } )
+  const h1 = Create( "h1", { assign:{ innerText: "Element Search" } } )
   Append( titleRow, h1 )
   
   // Acton Menu
