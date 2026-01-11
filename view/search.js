@@ -634,7 +634,13 @@ function addCombination(combination, solution) {
     if ( className ) {
       element.classList.add(className)
     }
+    
     element.classList.add("ingredient")
+    
+    if ( data.info[item.id][0] === "5" ) {
+      element.classList.add("boosted")
+    }
+    
     solution.appendChild(element)
 
     if (item.count > 1) {
@@ -682,7 +688,13 @@ function addSolutions(resultId, afterNode) {
   if ( className )
     recipeResult.classList.add(className)
   recipeResult.classList.add("result")
+  
+  if ( typeof resultId === "number" && data.info[resultId][0] === "5" ) {
+    recipeResult.classList.add("boosted")
+  }
+  
   solution.appendChild( recipeResult )
+  
 	if (creates?.length)
   	solution.appendChild( document.createTextNode(' = ') )
 
