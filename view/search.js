@@ -737,7 +737,8 @@ function addSolutionsFrom2dText(text) {
 
 window.addEventListener( "paste", event => {
 	const paste = event.clipboardData.getData("text")
-	addSolutionsFrom2dText(paste)
+  if ( !document.activeElement.matches("input") )
+    addSolutionsFrom2dText(paste)
 } )
 
 
