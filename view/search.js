@@ -623,21 +623,22 @@ function addCombination(combination, solution) {
       count = 1
     }
   }
-  packed.push({ id: lastId, count })
+  if (combination.length)
+    packed.push({ id: lastId, count })
   packed.forEach( (item, i) => {
     if (i > 0) {
       solution.appendChild(document.createTextNode(' + '))
     }
 
     const element = createElementSpan(item.id)
-    const className = elementsByName.size ? ( elementsByName.get( getName(item.id).toLowerCase() ) ? "have" : "missing" ) : null
+    const className = elementsByName.size ? ( elementsByName.get( getName(item.id)?.toLowerCase() ) ? "have" : "missing" ) : null
     if ( className ) {
       element.classList.add(className)
     }
     
     element.classList.add("ingredient")
     
-    if ( data.info[item.id][0] === "5" ) {
+    if ( data.info[item.id]?.[0] === "5" ) {
       element.classList.add("boosted")
     }
     
@@ -650,7 +651,7 @@ function addCombination(combination, solution) {
 }
 
 
-function addSolutions(resultId, afterNode) {
+function addSolutions(resultId, afterNode, customCreates) {
   const id = typeof resultId === "number" ? formatBack(getName(resultId)) : resultId
 
   const existingSolution = document.querySelector(`[data-id="${id}"]`)
@@ -671,7 +672,7 @@ function addSolutions(resultId, afterNode) {
   solution.classList.add('solution')
   solution.dataset.id = id
 
-  const creates = window.data.create[resultId]
+  const creates = customCreates ?? window.data.create[resultId]
   //if (!creates?.length)
   //  return
 
@@ -714,6 +715,32 @@ function addSolutions(resultId, afterNode) {
 }
 
 
+function addSolutionsFrom2dText(text) {
+	const solutions = text
+	.trim()
+	.toLowerCase()
+	.split(/\r?\n/)
+	.map( line => line.split(/\t|=|\+|,|;/)
+		.map( elem => elem.replaceAll( /[^a-z0-9 \-']/g, "" ).trim() )
+    .filter( elem => elem !== "" )
+		.map( elem => elem === "twao" ? "two-word answers only" : elem )
+		.map( elem => ~getId(elem) ? getId(elem) : elem )
+	)
+  .filter( solution => solution.length )
+  
+  if ( solutions.length ) {
+    solutions.reverse().forEach( recipe => {
+      addSolutions( recipe[0], null, [recipe.slice(1)] )
+    } )    
+  }
+}
+
+window.addEventListener( "paste", event => {
+	const paste = event.clipboardData.getData("text")
+	addSolutionsFrom2dText(paste)
+} )
+
+
 function search(name, allowNonExisting=false) {
     const elementName = name ?? document.getElementById("search").value.trim()
     let id = getId(elementName)
@@ -751,6 +778,7 @@ function updateElementStatus() {
     const name = node.innerText.toLowerCase()
     if ( elementsByName.get(name) ) {
       node.classList.remove("missing")
+      //node.classList.remove("norecipe")
       node.classList.add("have")
     }
     else {
