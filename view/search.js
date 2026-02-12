@@ -11,11 +11,11 @@ var enableAddAll = false
 
 // Game Event
 
-var eventName = "🏈️ Super Bowl 🏟"
-var eventBackgroundColor = "brown"
-var eventFontColor = "white"
+var eventName = "🏮️ Chinese New Year 🐉"
+var eventBackgroundColor = "red"
+var eventFontColor = "yellow"
 var eventBorderColor = "white"
-var eventElements = ["ultimate quarterback","pit crew","mvp","super bowl ring","halftime","cheerleader","coaching staff","sports stadium","player injury","football club","pylon marker","sideline","rushing","game strategy","quarterback","concession stand","hat-trick","super fan badge","seattle","team mascot","halftime cheer","vince","receiver","championship","video tribute","team jersey","gridiron","blitz","concourse lounge","fan section","spectator cheer","safety","super bowl lx","playbook diagram","playoff","halftime show","playoff game","mvp award","game clock","helmet","punt","game day","doubleheader game","pigskin ball","draft day","football field","play action","sports memorabilia","championship trophy","scoreboard light","player jersey","stadium seating","sports injury","referee whistle","bad bunny","linebacker","sports analyst","punt return","line of scrimmage","overtime period","super bowl anthem","chiefs","rams","bonus yardage","spectator","sideline reporter","play clock","offensive line","49ers","spectator section","stadium","infrared view","american football","linebacker stance","scoreboard display","tailgate grill","highlight","eagles","timeout","football pass","sports commentator","chief rival","draft pick","seahawks","clutch catch","vault boy","superbowl","lombardi trophy","team logo","playoff berth","sports broadcast","referee","field goal","crowd chant","football helmet","tailgate party","interception","defensive back","touchdown","super bowl","team flag","field goal post","victory celebration","fan merchandise","training camp"]
+var eventElements = ["symbolic decoration","cloud pattern","year of the fire horse","lucky cat","red tassel","auspicious symbol","yuan","folk art","fire horse","golden dragon","spring festival","festival music","red","lion dance","cheongsam attire","long dragon","twin dragons","jubilant celebration","drum performance","decoration","forbidden city","prosperity","chinese culture","2026","mandarin fruit","silk fabric","chinese new year","cantonese","auspicious color","happy new year","temple fair","china event","fortune","chinese porcelain","chinese music","lunar calendar","joyful celebration","jubilant","marriage custom","fireworks display","new arrival","china","chinese costume","ho-oh","feng shui","year of the horse","chinese calligraphy","red clothing","chunlian","red decorations","horizon","dragon dance","blessing banner","great wall","chinese tea","harmony symbol","chinese art","chinese paper cutting","energy","lantern","auspicious","firehorse","stability","dumpling","prosperity belt","firebreak","dragon's breath","bravery","traditional clothing","temple ornament","new year's eve","cultural celebration","family reunion","festival food","chinese silk","chinese opera","sacred rod","chinese knot","chinese zodiac","dragon boat","red color","chinese architecture","cherry blossom","speed","chinese lantern","clan reunion","lucky symbol","firecracker","chinese cuisine","red envelope","lucky ornament","chinese dragon","fortune cookie","jasmine","garland","fire horse","peony flower","medallion design","red lantern","stamina","red packet","dragon","chinese painting","ancestor","2026"]
 
 
 // Actions
@@ -730,10 +730,12 @@ function addSolutionsFrom2dText(text) {
   
   if ( solutions.length ) {
     solutions.reverse().forEach( recipe => {
-      addSolutions( recipe[0], null, [recipe.slice(1)] )
+      const chosenRecipe = recipe.length === 1 ? null : [recipe.slice(1)]
+      addSolutions( recipe[0], null, chosenRecipe )
     } )    
   }
 }
+
 
 window.addEventListener( "paste", event => {
 	const paste = event.clipboardData.getData("text")
@@ -1023,7 +1025,7 @@ function mkAutocomplete(input, allowNew=false) {
 
 
 function getName(id) {
-    return window.data.names[id]
+    return window.data.names[+id]
 }
 
 
