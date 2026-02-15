@@ -46,6 +46,10 @@ function toggleAddAll() {
   }
 }
 
+function removeFoundResults() {
+	document.querySelectorAll(".element.result.have").forEach( result => result.parentElement.remove() )
+}
+
 
 // Add UI
 
@@ -62,6 +66,7 @@ function toggleAddAll() {
     { name: "Sort Asc", fn: () => sortSolutionsAscending() },
     { name: "Sort Desc", fn: () => sortSolutionsDescending() },
     { name: "Reverse", fn: () => reverseSolutions() },
+    { name: "Remove Found Results", fn: () => removeFoundResults() },
     { name: "Clear All", fn: () => clearAllSolutions() },
     { name: "Toggle Add All", fn: () => toggleAddAll() },
     { name: "Open Elements", fn: () => importData(loadElements) },
