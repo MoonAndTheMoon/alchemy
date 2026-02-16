@@ -66,7 +66,7 @@ function removeFoundResults() {
     { name: "Sort Asc", fn: () => sortSolutionsAscending() },
     { name: "Sort Desc", fn: () => sortSolutionsDescending() },
     { name: "Reverse", fn: () => reverseSolutions() },
-    { name: "Remove Found Results", fn: () => removeFoundResults() },
+    { name: "Remove Found", fn: () => removeFoundResults() },
     { name: "Clear All", fn: () => clearAllSolutions() },
     { name: "Toggle Add All", fn: () => toggleAddAll() },
     { name: "Open Elements", fn: () => importData(loadElements) },
@@ -677,9 +677,7 @@ function addSolutions(resultId, afterNode, customCreates) {
   solution.classList.add('solution')
   solution.dataset.id = id
 
-  const creates = customCreates ?? window.data.create[resultId]
-  //if (!creates?.length)
-  //  return
+  const creates = customCreates ?? ( typeof resultId === "number" ? window.data.create[resultId] : undefined )
 
   const close = document.createElement('span')
   close.classList.add('close')
