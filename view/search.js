@@ -50,6 +50,14 @@ function removeFoundResults() {
 	document.querySelectorAll(".element.result.have").forEach( result => result.parentElement.remove() )
 }
 
+function removeExistingResults() {
+	document.querySelectorAll(".element.result:not(.norecipe)").forEach( result => result.parentElement.remove() )
+}
+
+function removeNonExistingResults() {
+	document.querySelectorAll(".element.result.norecipe").forEach( result => result.parentElement.remove() )
+}
+
 
 // Add UI
 
@@ -67,6 +75,8 @@ function removeFoundResults() {
     { name: "Sort Desc", fn: () => sortSolutionsDescending() },
     { name: "Reverse", fn: () => reverseSolutions() },
     { name: "Remove Found", fn: () => removeFoundResults() },
+    { name: "Remove Existing", fn: () => removeExistingResults() },
+    { name: "Remove Non-Existing", fn: () => removeNonExistingResults() },
     { name: "Clear All", fn: () => clearAllSolutions() },
     { name: "Toggle Add All", fn: () => toggleAddAll() },
     { name: "Open Elements", fn: () => importData(loadElements) },
