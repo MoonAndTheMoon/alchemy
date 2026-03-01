@@ -461,7 +461,7 @@ function downloadTopAB( minPageSize=120 ) {
 	
 	const includedA = new Set( Array.from(usedCounts.entries())
 		.sort( (a, b) => b[1] - a[1] )
-		.filter( ent => ent[1] >= /*minPageSize*/ 1000 )
+		.filter( ent => ent[1] >= /*minPageSize*/ 300 )
 		.map( ent => ent[0] )
 	)
 
