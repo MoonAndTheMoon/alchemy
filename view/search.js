@@ -530,6 +530,35 @@ function downloadReconstructedMerges() {
 }
 
 
+function findChains() {
+  fullpathResults = new Map()
+  partialResults = new Map()
+  const basicElements = new Set( ["earth", "air", "fire", "water"] )
+
+  for ( const [id, recipe] of Object.entries(data.create) ) {
+    let depth = 0
+    const stack = [ recipe[0] ?? [] ]
+    while (~depth) {
+      if ( !stack[depth].length ) {
+        // Reached a basic element
+        fullpathResults.set( getName(id), depth )
+        break
+      } else if ( stack[depth].every( el => el === stack[depth][0] ) ) {
+        // Recipe has only one unique element
+        depth++
+        stack[depth] = data.create[ stack[depth-1][0] ]?.[0] ?? []
+      } else {
+        // The recipe must've had more than 1 unique ingredients
+        partialResults.set( getName(id), depth )
+        break
+      }
+    }
+  }
+  
+  console.log( [...fullpathResults].sort( (a, b) => b[1] - a[1] ).map( ent => ent.join("\t") ).join("\n") )
+}
+
+
 
 // Element File
 
