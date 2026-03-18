@@ -50,6 +50,20 @@ function removeFoundResults() {
 	document.querySelectorAll(".element.result.have").forEach( result => result.parentElement.remove() )
 }
 
+function removeFullyFoundResults() {
+	document.querySelectorAll(".solution").forEach( solution => {
+		if ( [...solution.querySelectorAll(".element")].every( element => element.matches(".have") ) )
+			solution.remove()
+	} )
+}
+
+function removeFullyExistingResults() {
+	document.querySelectorAll(".solution").forEach( solution => {
+		if ( [...solution.querySelectorAll(".element")].every( element => element.matches(".have") || element.matches(":not(.norecipe)") ) )
+			solution.remove()
+	} )
+}
+
 function removeExistingResults() {
 	document.querySelectorAll(".element.result:not(.norecipe)").forEach( result => result.parentElement.remove() )
 }
@@ -776,6 +790,8 @@ function addSolutionsFrom2dText(text) {
       addSolutions( recipe[0], null, chosenRecipe )
     } )    
   }
+  
+  updateElementStatus()
 }
 
 
