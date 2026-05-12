@@ -11,11 +11,11 @@ var enableAddAll = false
 
 // Game Event
 
-var eventName = "📽️ Movies 🍿"
-var eventBackgroundColor = "black"
-var eventFontColor = "white"
-var eventBorderColor = "gold"
-var eventElements = ["bomb","halo","jaws","frodo","smaug","avatar","brando","movies","madmax","oscars","reagan","turkey","coppola","kubrick","no face","sinners","titanic","x-files","avengers","disaster","hogwarts","scorsese","travolta","brad pitt","film flop","gladiator","inception","poor plot","tom hanks","tarantino","box office","casablanca","film genre","ghost town","james bond","replicants","red carpet","screenplay","worst film","bad reviews","catastrophe","darth vader","shining","undead army","best picture","chaos on set","dolly parton","forrest gump","film blunder","film trailer","harry potter","meryl streep","movie legend","oscar trophy","academy award","count dracula","film industry","film director","golden statue","indiana jones","movie theater","godfather","angelina jolie","award ceremony","box office hit","dull storyline","lotr","movie director","movie premiere","opening speech","green book","terminator","best soundtrack","blockbuster hit","cinema building","kathleen turner","hosting scandal","martin scorsese","norse mythology","oscar statuette","twilight forest","dark knight","visual atrocity","winner's circle","alfred hitchcock","award nomination","miscasting error","red carpet event","steven spielberg","screenplay award","schindler's list","celebration event","hollywood theatre","imaginary villain","leonardo dicaprio","quentin tarantino","samuel l jackson","box office failure","best picture award","golden recognition","plot inconsistency","scarlett johansson","golden globe trophy","red carpet ceremony","promotional disaster"]
+var eventName = "🏆 World Cup ⚽"
+var eventBackgroundColor = "white"
+var eventFontColor = "black"
+var eventBorderColor = "black"
+var eventElements = "psg,uefa,futsal,neymar,soccer,arsenal,chelsea,la liga,serie a,crossbar,football,goal net,juventus,own goal,red card,throw in,vuvuzela,barcelona,coin toss,equalizer,free kick,goal post,goal line,hat trick,liverpool,touchline,bundesliga,club crest,extra time,el clasico,goalkeeper,team sheet,uefa badge,ankle feint,center back,corner flag,fifa trophy,golden boot,group stage,ground turf,golden goal,hand of god,luka modric,real madrid,soccer ball,yellow card,bicycle kick,blatant dive,dugout chair,dinamo minsk,league table,lionel messi,lamine yamal,offside rule,offside trap,penalty kick,penalty spot,penalty area,rubber cleat,stadium seat,soccer cleat,wayne rooney,chelsea badge,david beckham,first whistle,frank lampard,kylian mbappe,mohamed salah,rainbow flick,stadium pitch,soccer jersey,sergio aguero,training cone,attacking play,counter attack,diego maradona,erling haaland,fifa president,louis van gaal,matchday scarf,pitch invasion,premier league,ronaldo header,sir matt busby,stadium tunnel,technical area,world cup 2026,arsenal stadium,captain armband,dribbling skill,manchester city,matchday ticket,referee whistle,ronaldo nazario,starting eleven,soccer bootlace,world cup final,zinedine zidane,champions league,goalkeeper glove,player handshake,ronaldinho smile,transfer scandal,world cup trophy,cristiano ronaldo,manchester united,fifa world ranking,sir bobby charlton,stadium floodlight,substitution board,stadium scoreboard,silverware cabinet,zlatan ibrahimovic,championship parade,major league soccer,goal line technology".split(",")
 
 
 // Actions
@@ -170,6 +170,9 @@ window.addEventListener("contextmenu", function(event) {
 
 
 // Utilities
+
+const compareMixedNumericFn = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'}).compare
+
 
 function importData(fn, multiple=true) {
   const input = Create( "input", { attr:{ type: "file", multiple } } )
@@ -331,12 +334,12 @@ function getExcelExport(rows, header) {
 
 // Download Stuff
 
-function downloadElements(fileName, elementNames, maxPageSize=116, maxPages=5, randomOrder=false) {
+function downloadElements(fileName, elementNames, maxPageSize=116, maxPages=10, randomOrder=false) {
   const { keys, assign } = Object
   const { floor, random } = Math
 
   let page = 1
-  elementNames = elementNames.slice()
+  elementNames = elementNames.slice().filter( elementName => elementsByName.has(elementName) )
 
   while ( elementNames.length && page <= maxPages ) {
     const pickedElements = []
@@ -485,7 +488,7 @@ function downloadTopAB( minPageSize=120 ) {
 	
 	const includedA = new Set( Array.from(usedCounts.entries())
 		.sort( (a, b) => b[1] - a[1] )
-		.filter( ent => ent[1] >= /*minPageSize*/ 120 )
+		.filter( ent => ent[1] >= minPageSize )
 		.map( ent => ent[0] )
 	)
 
@@ -521,6 +524,14 @@ function downloadTopAB( minPageSize=120 ) {
 		//console.log(elements)
 		downloadElements( String(A) + ".txt", elements, minPageSize, 20, true )
 	}
+}
+
+
+function downloadDisplayedIngredients() {
+	const ingredientSet = new Set();
+	[...GetAll(".ingredient")].forEach( ingredient => ingredientSet.add( ingredient.textContent.toLowerCase() ) )
+	
+	downloadElements( "ingredients.txt", [...ingredientSet.keys()] )
 }
 
 
@@ -1137,7 +1148,7 @@ document.addEventListener("DOMContentLoaded", function () {
     searchMethod = searchMethods[ document.querySelector("#search-method").selectedIndex ]
     
     // Make sorted element list for binary search
-    window.data.namesSorted = [...window.data.names].sort()
+    window.data.namesSorted = [...window.data.names].sort(compareMixedNumericFn)
 
 })
 
