@@ -9,6 +9,11 @@ var limit = 100
 var enableAddAll = false
 
 
+// Debug
+//loadAllRecipes()
+//setTimeout( () => addSolutions( getId("commerce") ), 2500 )
+
+
 // Game Event
 
 var eventName = "🏆 World Cup ⚽"
@@ -24,17 +29,21 @@ function sortSolutionsAscending() {
   Replace( Get("#solutions"), Array.from(Get("#solutions").children).sort( (a,b) => a.dataset.id > b.dataset.id ) )
 }
 
+
 function sortSolutionsDescending() {
   Replace( Get("#solutions"), Array.from(Get("#solutions").children).sort( (a,b) => a.dataset.id < b.dataset.id ) )
 }
+
 
 function reverseSolutions() {
   Replace( Get("#solutions"), Array.from(Get("#solutions").children).reverse() )
 }
 
+
 function clearAllSolutions() {
   Replace( Get("#solutions") )
 }
+
 
 function toggleAddAll() {
   window.enableAddAll = !window.enableAddAll
@@ -46,9 +55,18 @@ function toggleAddAll() {
   }
 }
 
+
+function loadAllRecipes() {
+  if ( !document.querySelector("script[src=\"data_create_remaining_recipes.js\"]") ) {
+    Append( document.head, Create( "script", { attr:{ src:"data_create_remaining_recipes.js", type:"text/javascript" } } ) )
+  }
+}
+
+
 function removeFoundResults() {
 	document.querySelectorAll(".element.result.have").forEach( result => result.parentElement.remove() )
 }
+
 
 function removeFullyFoundResults() {
 	document.querySelectorAll(".solution").forEach( solution => {
@@ -57,6 +75,7 @@ function removeFullyFoundResults() {
 	} )
 }
 
+
 function removeFullyExistingResults() {
 	document.querySelectorAll(".solution").forEach( solution => {
 		if ( [...solution.querySelectorAll(".element")].every( element => element.matches(".have") || element.matches(":not(.norecipe)") ) )
@@ -64,9 +83,11 @@ function removeFullyExistingResults() {
 	} )
 }
 
+
 function removeExistingResults() {
 	document.querySelectorAll(".element.result:not(.norecipe)").forEach( result => result.parentElement.remove() )
 }
+
 
 function removeNonExistingResults() {
 	document.querySelectorAll(".element.result.norecipe").forEach( result => result.parentElement.remove() )
@@ -93,6 +114,7 @@ function removeNonExistingResults() {
     { name: "Remove Non-Existing", fn: () => removeNonExistingResults() },
     { name: "Clear All", fn: () => clearAllSolutions() },
     { name: "Toggle Add All", fn: () => toggleAddAll() },
+    { name: "Load all recipes", fn: () => loadAllRecipes() },
     { name: "Open Elements", fn: () => importData(loadElements) },
     //{ name: "document.write", fn: () => document.write() },
   ]
@@ -677,8 +699,8 @@ function addEventSolutions() {
 }
 
 
-function addCombination(combination, solution) {
-  //console.log(combination, solution)
+function addCombination(combination, ingredientList) {
+  //console.log(combination, ingredientList)
   const packed = []
   let lastId = combination[0]
   let count = 1
@@ -696,7 +718,7 @@ function addCombination(combination, solution) {
     packed.push({ id: lastId, count })
   packed.forEach( (item, i) => {
     if (i > 0) {
-      solution.appendChild(document.createTextNode(' + '))
+      ingredientList.appendChild(document.createTextNode(' + '))
     }
 
     const element = createElementSpan(item.id)
@@ -711,10 +733,10 @@ function addCombination(combination, solution) {
       element.classList.add("boosted")
     }
     
-    solution.appendChild(element)
+    ingredientList.appendChild(element)
 
     if (item.count > 1) {
-      solution.appendChild(document.createTextNode(" ×" + item.count))
+      ingredientList.appendChild(document.createTextNode(" ×" + item.count))
     }
   } )
 }
@@ -765,15 +787,27 @@ function addSolutions(resultId, afterNode, customCreates) {
   
 	if (creates?.length)
   	solution.appendChild( document.createTextNode(' = ') )
+  
+  const ingredientContainer = Create("span")
+  ingredientContainer.classList.add("ingredientcontainer")
+  solution.appendChild( ingredientContainer )
+  
+  let ingredientList = Create("span")
+  ingredientList.classList.add("ingredientlist")
+  ingredientContainer.appendChild( ingredientList )
 
   for (let i = 0; i < creates?.length; i++) {
     if (i > 0) {
-      solution.appendChild( document.createTextNode(' or ') )
+      ingredientList = Create("span")
+      ingredientList.classList.add("ingredientlist")
+      ingredientList.appendChild( document.createElement('br')  )
+      ingredientList.appendChild( document.createTextNode("or ") )
+      ingredientContainer.appendChild( ingredientList )
     }
-    addCombination(creates[i], solution)
+    addCombination(creates[i], ingredientList)
   }
 
-  solution.appendChild(document.createElement('br'))
+  solution.appendChild( document.createElement('br') )
 
   if ( afterNode )
     afterNode.after(solution)
@@ -836,7 +870,7 @@ function createElementSpan(id, clickable=true) {
       element.classList.add("norecipe")
     if (clickable) {
       element.addEventListener("click", function () {
-        addSolutions(id, element.parentElement)
+        addSolutions(id, element.parentElement.parentElement.parentElement)
       })
     }
     return element

@@ -107,23 +107,76 @@ button {
   color: #fff;
 }
 
+.copy-break::after {
+  content: "\A";
+  white-space: pre;
+  display: contents; 
+  font-size: 0; /* Ensures it doesn't accidentally cause visual spacing */
+}
+
 .solution {
   display: flex;
   flex-wrap: wrap;
   
   user-select: text;
   justify-content: start;
-  align-items: center;
+  align-items: baseline;
   row-gap: 5px;
-  padding: 5px 0;
+/*   padding: 5px 0; */
   
 }
 
 .solution > * {
   color: #eee;
   cursor: pointer;
-  padding: 1px 8px;
+  padding: 1px 3px;
+/*   background-color: #3e5871; */
+  margin: 0px 7px;
+}
+
+.ingredientlist > br {
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+}
+
+#solutions {
   font-size: 125%;
+}
+
+br {
+/*   content: " "; */
+/*   display: contents; */
+/*   white-space-collapse: collapse; */
+}
+
+.ingredientcontainer {
+  margin: 0;
+/*   display: absolute; */
+/*   flex-wrap: wrap; */
+/*   margin-top: 2px; */
+/*   top: 2px; */
+/*   align-items: center; */
+}
+
+.ingredientlist {
+  display: flex;
+  flex-wrap: wrap;
+  
+  user-select: text;
+/*   white-space-collapse: collapse; */
+  justify-content: start;
+  align-items: baseline;
+  row-gap: 5px;
+  padding: 5px 0;
+  
+}
+
+.ingredientlist > * {
+  color: #eee;
+  cursor: pointer;
+  padding: 1px 8px;
+/*   font-size: 125%; */
   background-color: #3e5871;
   margin: 0px 7px;
 }
@@ -176,6 +229,7 @@ p {
 
 .element.result {
 /*   border: solid lightseagreen 2px; */
+  padding: 1px 8px;
   border: solid teal 2px;
   cursor: default;
   background-color: rgb(54, 68, 108);
