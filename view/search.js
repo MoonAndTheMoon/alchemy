@@ -174,18 +174,18 @@ document.querySelector("#search").addEventListener("keyup", function(event) {
 
 window.addEventListener("contextmenu", function(event) {
 
-  if ( event.target.matches(".solution") ) {
-		event.target.remove()
-    event.preventDefault()
-    return false
-
-	} else if ( event.target.matches(".element") ) {
+	if ( event.target.matches(".element") ) {
     const name = event.target.innerText.toLowerCase()
     elementsByName.set( name, elementsByName.get(name) ?? [name] )
     updateElementStatus()
     event.preventDefault()
     return false
+  } else if ( event.target.matches(".solution") ) {
+		//event.target.remove()
+    //event.preventDefault()
+    //return false
   }
+
 
 } )
 
