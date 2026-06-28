@@ -605,7 +605,7 @@ function findChains() {
   console.log( [...fullpathResults].sort( (a, b) => b[1] - a[1] ).map( ent => ent.join("\t") ).join("\n") )
   
   console.log( "Size:", fullpathResults.size )
-  console.log( "Median distance:", [...fullpathResults.values()][Math.floor(fullpathResults.size / 2)] )
+  console.log( "Median distance:", [...fullpathResults].sort( (a, b) => b[1] - a[1] )[Math.floor(fullpathResults.size / 2)] )
 }
 
 
