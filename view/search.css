@@ -1,7 +1,7 @@
 
 /* Debugging */
 * {
-	/*! outline: solid cyan 1px; */
+/* 	outline: solid cyan 1px; */
 }
 
 /* No default margins */
@@ -114,21 +114,25 @@ button {
   font-size: 0; /* Ensures it doesn't accidentally cause visual spacing */
 }
 
+#solutions {
+  font-size: 125%;
+}
+
 .solution {
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   
   user-select: text;
   justify-content: start;
   align-items: baseline;
   row-gap: 5px;
-/*   padding: 5px 0; */
+  padding: 5px 0;
   
 }
 
 .solution > * {
   color: #eee;
-  cursor: pointer;
+/*   cursor: pointer; */
   padding: 1px 3px;
 /*   background-color: #3e5871; */
   margin: 0px 7px;
@@ -140,36 +144,29 @@ button {
   font-size: 0;
 }
 
-#solutions {
-  font-size: 125%;
-}
-
-br {
-/*   content: " "; */
-/*   display: contents; */
-/*   white-space-collapse: collapse; */
-}
-
 .ingredientcontainer {
   margin: 0;
-/*   display: absolute; */
-/*   flex-wrap: wrap; */
+  display: flex;
+  flex-flow: column wrap;
+  align-items: start;
+  row-gap: 7px;
 /*   margin-top: 2px; */
 /*   top: 2px; */
-/*   align-items: center; */
 }
 
 .ingredientlist {
   display: flex;
-  flex-wrap: wrap;
-  
-  user-select: text;
-/*   white-space-collapse: collapse; */
+  flex-flow: row wrap;
   justify-content: start;
   align-items: baseline;
-  row-gap: 5px;
-  padding: 5px 0;
   
+  user-select: text;
+/*   padding: 0px 0; */
+  
+}
+
+* {
+/*   outline: solid rgba(255,0,0,0.5) 1px; */
 }
 
 .ingredientlist > * {
@@ -183,6 +180,7 @@ br {
 
 .close {
   opacity: 0;
+  cursor: pointer;
 }
 
 .close::after {
