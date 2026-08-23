@@ -39,6 +39,22 @@ data.names.forEach( name => esElementSet.add(name) )
   } )
   Append( document.body, pasteAndDownloadButton )
   
+  // Paste elements input
+  const pasteAndDownloadInput = Create( "input", { assign:{ innerText: "", type: "text" }, attr:{ tabIndex: -1 }, style:{ display: "span" } } )
+  pasteAndDownloadInput.addEventListener( "paste", event => {
+    try {
+      const text = event.clipboardData.getData("text")
+      //readPaste(text)
+      const modifiedText = "#" + Date.now() + "\r\n" + text
+      download( "paste_" + Date.now() + ".txt", modifiedText )
+      Get("#pasteContent").innerText = modifiedText
+    } catch(err) {
+      alert(err)
+      console.log(err)
+    }
+  } )
+  Append( document.body, pasteAndDownloadInput )
+  
   // PasteContent
   const pasteText = Create( "p", { assign:{ innerText: "", id: "pasteContent" } } )
   Append( document.body, pasteText )

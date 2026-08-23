@@ -2,3 +2,7 @@
 body {
     background-color: #8888dd;
 }
+
+input {
+    width: 15px;
+}
