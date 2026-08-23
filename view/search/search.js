@@ -58,7 +58,7 @@ function toggleAddAll() {
 
 function loadAllRecipes() {
   if ( !document.querySelector("script[src=\"data_create_remaining_recipes.js\"]") ) {
-    Append( document.head, Create( "script", { attr:{ src:"data_create_remaining_recipes.js", type:"text/javascript" } } ) )
+    Append( document.head, Create( "script", { attr:{ src:"data/data_create_remaining_recipes.js", type:"text/javascript" } } ) )
   }
 }
 
