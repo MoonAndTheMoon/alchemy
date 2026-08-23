@@ -26,11 +26,16 @@ data.names.forEach( name => esElementSet.add(name) )
   // Paste elements button
   const pasteAndDownloadButton = Create( "button", { assign:{ innerText: "Paste & Download" }, attr:{ tabIndex: -1 } } )
   pasteAndDownloadButton.addEventListener( "click", async () => {
-    const text = await navigator.clipboard.readText()
-    //readPaste(text)
-    const modifiedText = "#" + Date.now() + "\r\n" + text
-    download( "paste_" + Date.now() + ".txt", modifiedText )
-    Get("#pasteContent").innerText = modifiedText
+    try {
+      const text = await navigator.clipboard.readText()
+      //readPaste(text)
+      const modifiedText = "#" + Date.now() + "\r\n" + text
+      download( "paste_" + Date.now() + ".txt", modifiedText )
+      Get("#pasteContent").innerText = modifiedText
+    } catch(err) {
+      alert(err)
+      console.log(err)
+    }
   } )
   Append( document.body, pasteAndDownloadButton )
   
