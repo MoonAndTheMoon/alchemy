@@ -16,11 +16,11 @@ var enableAddAll = false
 
 // Game Event
 
-var eventName = "🧌🐙 Monsters 👾👻"
-var eventBackgroundColor = "green"
-var eventFontColor = "white"
-var eventBorderColor = "purple"
-var eventElements = "oni,sila,yig,naga,ogre,yeti,circe,fairy,golem,genie,grogu,hydra,harpy,kappa,mummy,pixie,siren,shrek,troll,valak,chucky,fenrir,gorgon,goblin,kraken,kelpie,medusa,scylla,sphinx,sadako,stitch,slappy,toshio,yautja,zombie,bigfoot,cyclops,chimera,centaur,cthulhu,griffin,kitsune,mothman,mermaid,phoenix,pikachu,slither,unicorn,valtiel,wendigo,basilisk,cerberus,gargoyle,godzilla,minotaur,odysseus,werewolf,baba yaga,charybdis,ghostface,king kong,leviathan,night hag,pennywise,razor jaw,toothless,xenomorph,moor beast,polyphemus,ashen ghoul,black annis,cave lurker,skin walker,tooth fairy,cellar ghoul,frankenstein,gaunt figure,hollow child,jersey devil,withered hag,crimson widow,michael myers,pale stranger,smile monster,sinister doll,tunnel horror,crawling dread,carnival freak,freddy krueger,gnashing beast,jason voorhees,lurking terror,rag doll fiend,wailing spirit,bloodless bride,midnight howler,stitched horror,dollhouse spirit,loch ness monster,pukwudgie,el silbon,qalupalik,anqa,la lechuza,dover demon,bauk,heikegani,iele,draugr,bunyip,rathalos,rathian,sif,banshee,chupacabra".split(",")
+var eventName = "👾🥷 The truth is out there 🔦🛸"
+var eventBackgroundColor = "#353535"
+var eventFontColor = "yellow"
+var eventBorderColor = "black"
+var eventElements = "ufo,eleven,seance,area 51,roswell,ufonaut,zone 52,cover-up,exorcism,greyling,red pill,xenofile,chemtrail,ectoplasm,emf meter,fbi agent,freemason,hangar 18,hangar 51,watergate,alien file,deep state,demogorgon,flat earth,false flag,grey alien,illuminati,mothership,neuralyzer,radar blip,top secret,crop circle,foo fighter,majestic 12,nazca lines,ouija board,poltergeist,static hiss,truman show,tinfoil hat,telekinesis,upside down,alien hybrid,alien signal,craft debris,dyatlov pass,grassy knoll,grey visitor,hollow earth,implant chip,leaked photo,men in black,psychic girl,saucer crash,saucer wreck,saucer fleet,stakedut van,tractor beam,trust no one,alien autopsy,evp recording,flying saucer,first contact,lizard people,moving lights,roswell crash,secret hangar,whistleblower,alien invasion,all-seeing eye,disinformation,mandela effect,night sighting,night stakeout,phoenix lights,secret society,strange lights,strange signal,secret footage,alien abduction,basement office,close encounter,classified file,new world order,official denial,weather balloon,bermuda triangle,contact protocol,extraterrestrial,ghost hunter kit,little green man,skinwalker ranch,ancient astronaut,astral projection,government secret,jfk assassination,moon landing hoax,project blue book,redacted document,rendlesham forest,simulation theory,war of the worlds,security clearance,monster of the week,night vision camera,unidentified object,glitch in the matrix,battle of los angeles,cigarette smoking man,paranormal investigator".split(",")
 
 
 // Actions
