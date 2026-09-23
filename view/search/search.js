@@ -812,8 +812,10 @@ function addSolutions(resultId, afterNode, customCreates) {
 
   solution.appendChild( document.createElement('br') )
 
-  if ( afterNode )
+  if ( afterNode ) {
     afterNode.after(solution)
+    //solution.scrollIntoView()
+  }
   else
     document.querySelector("#solutions").prepend(solution)
 }
