@@ -35,6 +35,53 @@ function sortSolutionsDescending() {
 }
 
 
+function sortSolutionsCustom() {
+	const ingredientMap = new Map()
+	const solutions = [...GetAll(".solution")].map( solution => {
+		const result = solution.dataset.id
+		const ingredients = [...GetAll(".element.ingredient", solution)].map( ingredient => {
+			const name = ingredient.textContent.toLowerCase()
+			const found = ingredient.classList.contains("have")	
+			
+			if ( ingredientMap.has(name) ) {
+				ingredientMap.get(name).count++
+			} else {
+				ingredientMap.set( name, { count: 1, found } )
+			}
+			
+			return {
+				name,
+				found
+			}
+		} )
+		
+		const foundIngredientFraction = ingredients.reduce( (acc, cur) => acc + +(cur.found), 0 ) / ingredients.length
+		
+		return {
+			solution,
+			result,
+			ingredients,
+			foundIngredientFraction
+		}
+	} )
+	
+	sortSolutionsAscending()
+	//console.log( 
+		//solutions.map( solution => solution.ingredients.map( ing => ingredientMap.get(ing.name).count ) )
+	//)
+	solutions.sort( (a, b) => Math.max( ...a.ingredients.map( ing => ingredientMap.get(ing.name).count ) ) < Math.max( ...b.ingredients.map( ing => ingredientMap.get(ing.name).count ) ) )
+		
+	solutions.sort( (a, b) => a.foundIngredientFraction < b.foundIngredientFraction )
+	
+	//return { solutions, ingredientMap }
+	
+  Replace(
+		Get("#solutions"),
+		solutions.map( solution => solution.solution )
+	)
+}
+
+
 function reverseSolutions() {
   Replace( Get("#solutions"), Array.from(Get("#solutions").children).reverse() )
 }
