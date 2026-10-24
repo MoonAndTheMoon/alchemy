@@ -150,8 +150,8 @@ function removeNonExistingResults() {
   const h1 = Create( "h1", { assign:{ innerText: "Element Search" } } )
   Append( titleRow, h1 )
   
-  // Acton Menu
-  const actionItems = [
+  // Action Menu
+  const toolItems = [
     { name: "Tools", fn: () => null, options:{ style:{ display: "none" } } },
     { name: "Sort Asc", fn: () => sortSolutionsAscending() },
     { name: "Sort Desc", fn: () => sortSolutionsDescending() },
@@ -165,17 +165,440 @@ function removeNonExistingResults() {
     { name: "Open Elements", fn: () => importData(loadElements) },
     //{ name: "document.write", fn: () => document.write() },
   ]
-  const actionMenu = Create( "select", { assign:{ id: "action-menu" }, attr:{ tabIndex: -1 }, classes:["actionmenu"], style:{ width: "60px" } } )
-  actionMenu.addEventListener( "change", ev => {
-    actionItems[ev.target.selectedIndex].fn()
+  
+  const toolMenu = Create( "select", { assign:{ id: "action-menu" }, attr:{ tabIndex: -1 }, classes:["actionmenu"], style:{ width: "60px" } } )
+  toolMenu.addEventListener( "change", ev => {
+    toolItems[ev.target.selectedIndex].fn()
     ev.target.selectedIndex = 0
     ev.target.blur()
   } )
+  
   Append(
-    actionMenu,
-    ...actionItems.map( (action, i) => Create( "option", Assign( { assign:{ innerText:action.name, value: i } }, action.options ?? {} ) ) )
+    toolMenu,
+    ...toolItems.map( (action, i) => Create( "option", Assign( { assign:{ innerText:action.name, value: i } }, action.options ?? {} ) ) )
   )
-  Append( titleRow, actionMenu )
+  
+  Append( titleRow, toolMenu )
+  
+  
+  // List Menu
+  const lists = [
+    {
+      "category": "00 Dropdown Label",
+      "name": "Lists",
+      "sortName": "",
+      "elements": "",
+      "options": { style:{ display: "none" } }
+    },
+    {
+      "category": "01 Live Event",
+      "name": "Halloween 2026",
+      "sortName": "",
+      "elements": "bat,crypt,ghost,skull,witch,casper,coffin,potion,scythe,wraith,dracula,ofrenda,bogeyman,coraline,cemetery,lollipop,corn maze,gummy bat,mummy dog,nosferatu,skull mug,tarantula,tombstone,boo basket,bat cookie,candy corn,cute ghost,coffin lid,gummy worm,jump scare,la catrina,scooby doo,slenderman,beetlejuice,black widow,bat cupcake,creepy doll,creaky door,eye of newt,grim reaper,hocus pocus,huggy wuggy,hissing cat,sugar skull,vampire bat,voodoo doll,vampire nap,corpse bride,crystal ball,creepy attic,creaky stair,coffin couch,ghostbusters,ghost selfie,howling wind,horror movie,monster mash,sudden chill,zombie teddy,addams family,all souls day,broom parking,brain cupcake,costume party,caramel apple,crescent moon,eyeball candy,grape eyeball,ghost cupcake,mummy hot dog,porch pumpkin,pumpkin kitty,spooky season,sleepy hollow,vampire fangs,witching hour,witch costume,witch pumpkin,bedsheet ghost,bloody cupcake,carved pumpkin,creaking floor,freddy fazbear,friendly ghost,haunted castle,pumpkin pinata,rattling chain,spider balloon,skeleton puppy,spider doormat,trunk or treat,all hallows eve,haunted hayride,haunted hayloft,spooky basement,wednesday dance,echoing footstep,haunted doorbell,jack skellington,plastic skeleton,skeleton costume,trick or treater,wednesday addams,witch hat cookie,werewolf haircut,bubbling cauldron,headless horseman,bobbing for apples,black cat crossing,fluttering curtain,haunted house tour,pumpkin spice latte,witch finger cookie,bride of frankenstein,spooky scary skeleton"
+    },
+    {
+      "category": "02 Main",
+      "name": "Goals",
+      "sortName": "",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Olympics Expert",
+      "sortName": "Olympics Expert",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Stargazer",
+      "sortName": "Stargazer",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Capital Collector",
+      "sortName": "Capital Collector",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Bartender",
+      "sortName": "Bartender",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Commander in Chief",
+      "sortName": "Commander in Chief",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Pharaohs Court",
+      "sortName": "Pharaohs Court",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "The Bard",
+      "sortName": "The Bard",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Greek Alphabet",
+      "sortName": "Greek Alphabet",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Norse Saga",
+      "sortName": "Norse Saga",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "River Runner",
+      "sortName": "River Runner",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Peak Bagger",
+      "sortName": "Peak Bagger",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Code Wizard",
+      "sortName": "Code Wizard",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Dinosaur Dig",
+      "sortName": "Dinosaur Dig",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Currency Exchange",
+      "sortName": "Currency Exchange",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Seven Seas",
+      "sortName": "Seven Seas",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Jeweller",
+      "sortName": "Jeweller",
+      "elements": "DIAMOND,RUBY,SAPPHIRE,EMERALD,AMETHYST,TOPAZ,OPAL,GARNET,JADE,PEARL,TURQUOISE,AQUAMARINE,PERIDOT,ONYX,AGATE,OBSIDIAN,QUARTZ,CITRINE,MALACHITE,LAPIS LAZULI,MOONSTONE,TANZANITE,TOURMALINE,ZIRCON,AMBER"
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Kennel Club",
+      "sortName": "Kennel Club",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Polyglot",
+      "sortName": "Polyglot",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Bright Stars",
+      "sortName": "Bright Stars",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Moonwalker",
+      "sortName": "Moonwalker",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Purple Born",
+      "sortName": "Purple Born",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Dog Person",
+      "sortName": "Dog Person",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Citizen of the World",
+      "sortName": "Citizen of the World",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Zoologist",
+      "sortName": "Zoologist",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Cyber Sportsman",
+      "sortName": "Cyber Sportsman",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Holy Trinity",
+      "sortName": "Holy Trinity",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Nobel Laureate",
+      "sortName": "Nobel Laureate",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Top Athlete",
+      "sortName": "Top Athlete",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Atom Smasher",
+      "sortName": "Atom Smasher",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Pioneer",
+      "sortName": "Pioneer",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "God of Gods",
+      "sortName": "God of Gods",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Grammy Winner",
+      "sortName": "Grammy Winner",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Oscar Scholar",
+      "sortName": "Oscar Scholar",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Food Connoisseur",
+      "sortName": "Food Connoisseur",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Cosmologist",
+      "sortName": "Cosmologist",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Paranormal",
+      "sortName": "Paranormal",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Color King",
+      "sortName": "Color King",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Historian",
+      "sortName": "Historian",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Bookworm",
+      "sortName": "Bookworm",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Mythology Lover",
+      "sortName": "Mythology Lover",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Cinema Fan",
+      "sortName": "Cinema Fan",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Music Lover",
+      "sortName": "Music Lover",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Fruit Lover",
+      "sortName": "Fruit Lover",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Botanist",
+      "sortName": "Botanist",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Money Maker",
+      "sortName": "Money Maker",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Mechanic",
+      "sortName": "Mechanic",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Social Networker",
+      "sortName": "Social Networker",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "3 Letter Club",
+      "sortName": "3 Letter Club",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Yes, I Did It",
+      "sortName": "Yes, I Did It",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "King of the World",
+      "sortName": "King of the World",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Mendeleev Buddy",
+      "sortName": "Mendeleev Buddy",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Esotericist",
+      "sortName": "Esotericist",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Zodiac Master",
+      "sortName": "Zodiac Master",
+      "elements": ""
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Anatomy Atlas",
+      "sortName": "Anatomy Atlas",
+      "elements": "HEART,BRAIN,LIVER,LUNG,KIDNEY,STOMACH,SPLEEN,PANCREAS,INTESTINE,SKIN,BONE,MUSCLE,BLOOD,NERVE,SPINE,SKULL,RIB,FEMUR,TENDON,CARTILAGE,ARTERY,VEIN,THYROID,BLADDER,ESOPHAGUS,DIAPHRAGM,RETINA,COCHLEA,LARYNX,APPENDIX"
+    },
+    {
+      "category": "03 Achievement",
+      "name": "Orchestra",
+      "sortName": "Orchestra",
+      "elements": ""
+    },
+    {
+      "category": "04 Rarity",
+      "name": "Divine",
+      "sortName": "1",
+      "elements": "ADDITION,ANTONYM,BIRTHPLACE,DERIVATIVE,EQUIVALENT,LIQUID,MATERIAL,MATTER,MEANING,MULTIPLICATION,NUMBER,OPPOSITE,PAST TENSE,PROPERTY,RANDOM ITEM,SAME,SIMILAR,SLANG,SOLID,SUBSTANCE,SYNONYM,TWO-WORD ANSWERS ONLY,ZERO"
+    },
+    {
+      "category": "04 Rarity",
+      "name": "Legendary",
+      "sortName": "2",
+      "elements": "1984,ABRAHAM LINCOLN,AMERIGO VESPUCCI,BEETHOVEN,BIBLE,BOY WHO LIVED,CANADA,CATHERINE THE GREAT,CHAMPIONS LEAGUE,CINDERELLA,CLEOPATRA,COMMUNISM,CONSTANTINOPLE,COVID-19,DOLLAR,DOSTOEVSKY,EIFFEL TOWER,ELVIS PRESLEY,EVEREST,EXCALIBUR,FAUST,FOUR HORSEMEN,FRANCE,FROGMEN,GAME THEORY,GAMETE,GERMANY,GOLD,GOLDEN RETRIEVER,GPS,GREAT DEPRESSION,GUINEA PIG,HAL 9000,HERCULES,HIPPOCAMPUS,HOLY GRAIL,HOLY ROMAN EMPIRE,IBUPROFEN,ILLUMINATI,INDIA,INSULIN,ISAAC NEWTON,ITALY,JACK THE RIPPER,JESUS CHRIST,JOAN OF ARC,KAMA SUTRA,KING ARTHUR,LEONARDO DAVINCI,LUCIFER,MAGELLAN,MANHATTAN,MARIE CURIE,MARTINI,MATRYOSHKA,MILKY WAY,MINIBIT,MONA LISA,NAPOLEON,NASA,NETHERLANDS,NEUTRINO,NIETZSCHE,OHM'S LAW,OLYMPICS,OZZY OSBOURNE,PANDEMONIUM,PENNY,PERSEPHONE,PHOSPHORUS,PICASSO,PINEAPPLE PIZZA,PIZZA,PRIME NUMBER,PROTEIN,PRUSSIA,RAMSES II,ROSETTA STONE,SCHRODINGER'S CAT,SECRET SANTA,SEOUL,SHAKESPEARE,SHERLOCK HOLMES,SISYPHUS,SPAGHETTI,SPAIN,STONEHENGE,STRING THEORY,T-REX,TERMINATOR,THEORY OF RELATIVITY,TITANIC,UNITED KINGDOM,UNITED NATIONS,UNITED STATES,USA,VOLKSWAGEN BEETLE,WORLD WAR II,YURI GAGARIN"
+    },
+    {
+      "category": "04 Rarity",
+      "name": "Epic",
+      "sortName": "3",
+      "elements": "911,ADAM,ADAM SMITH,AFRICA,AGRICULTURE,AI,ALADDIN,ALPHABET,APOCALYPSE,AQUEDUCT,ARTIFICIAL INTELLIGENCE,ASIA,ASPIRIN,ATOM,AYRTON SENNA,BASILISK,BEE,BINARY CODE,BRANDY,BRITISH EMPIRE,BRONZE,CAPITALISM,CAPTAIN HOOK,CENTURION,CERBERUS,CHARLES DARWIN,CHEESEBURGER,CHERRY BLOSSOM,CHICKEN NUGGETS,CHLOROPHYLL,CHRISTIANITY,CHRISTMAS,CHRISTMAS COOKIE,CITY,CIVIL WAR,CIVILIZATION,COLD WAR,COLONIALISM,COMPASS,COMPUTER,CONAN,COPPER,COUNTRY,DA VINCI,DANTE,DARWIN,DEATH,DEUS EX,DOG,EAGLE,ECONOMY,EINSTEIN,ELECTRICITY,ENIGMA,EPIC,EUROPE,EVE,EVOLUTION,FERMENTATION,FERTILIZATION,FONDUE,GALILEO,GEOMETRY,GEORGE WASHINGTON,GOD,GRAVITY,HALLOWEEN,HAMBURGER,HEISENBERG,HELIUM,HENTAI,HIROSHIMA,HORMONE,HUMAN,HUSKY,HYDROGEN,ISTANBUL,JURASSIC PARK,KAMIKAZE,LEGEND,LIFE,LOS ANGELES,LOVE,MAMMOTH,MAPLE SYRUP,MATADOR,MATHEMATICS,MEDUSA,MERCURY,MERLIN,METAL,MICKEY MOUSE,MICROBE,MICROSCOPE,MINOTAUR,MINUTE,MOBY DICK,MONACO,MONEY,NARUTO,NATURE,NEANDERTHAL,NEPTUNE,NEVADA,NEW YORK,NIHILISM,NILE,NINJA,NUCLEAR REACTOR,NUKA-COLA,ODYSSEY,OKTOBERFEST,OLYMPUS,OPERA,ORIGINAL SIN,OSLO,OXYGEN,PAGODA,PARIS,PATTON,PEARL HARBOR,PHILADELPHIA,PHYSICS,PLANT,POLAND,PORCELAIN,POSEIDON,PRESSURE,PROMETHEUS,PTERODACTYL,PYRAMIDS,QUARANTINE,QUARK,QUASAR,RANDOM NUMBER,RASPUTIN,REDDIT,ROBIN HOOD,ROME,ROMEO,SAGRADA FAMILIA,SAKURA,SAMURAI,SANTA CLAUS,SCALAR,SCIENCE,SCOTLAND,SHOGUN,SILENCE,SIN,SOCRATES,SOUTH KOREA,STATISTICS,SULFUR,SUSHI,TECHNOLOGY,TEXAS,TIME,TOKYO,TOKYO DRIFT,TOOL,TRIANGLE,TSAR,UNICORN,URANIUM,VALHALLA,VATICAN,VENICE MASK,VENUS,VODKA,WASHINGTON,WOMAN,YETI,ZEBRA,ZEUS"
+    },
+    {
+      "category": "04 Rarity",
+      "name": "Rare",
+      "sortName": "4",
+      "elements": "ACHIEVEMENT,ALCHEMY,ALGAE,ALIEN,ALOE VERA,ANGEL,ANIMALS,ANIME,ANTIBODY,APHRODITE,APOLLO,APPLE PIE,ASTRONAUT,ASTRONOMY,ATHENS,ATLANTIS,ATMOSPHERE,ATOM BOMB,AUSTRALIA,AUTOMATION,AUTUMN,BACTERIA,BALLET,BANK,BASILICA,BEAUTY,BEER,BIOFUEL,BIOLOGY,BIRD,BIRTHDAY,BITCOIN,BOAT,BONSAI,BUG,BUREAUCRAT,BUTTERFLY,CACTUS,CAESAR,CALCIUM,CALENDAR,CANDY,CANVAS,CAR,CARBON,CARBON DIOXIDE,CATASTROPHE,CATHEDRAL,CEMENT,CENTAUR,CERAMIC,CHAIR,CHANGE,CHEESE,CHEMISTRY,CHERNOBYL,CHOCOLATE,CITIZEN,CITIZENSHIP,COAL,COFFEE,COLOSSEUM,COMIC BOOK,CONCRETE,CONFIDENCE,CONSCIOUSNESS,CONSPIRACY,CONTRACT,COOKIE,COUNTRYSIDE,COURAGE,CPU,CREATURE,CROCODILE,CUPID,CURIOSITY,CURRENCY,CYBERPUNK,CYBORG,DEBT,DEFIBRILLATOR,DEVIL,DICTATORSHIP,DINOSAUR,DOCTOR,DOCUMENT,DOOM,DOUBLE AGENT,DRACULA,DYNAMITE,DYSTOPIAN FUTURE,E-SPORTS,EDUCATION,EGG,EGYPT,ENCRYPTION,ENERGY,ENGINE,ENGINEER,ENTROPY,EQUALITY,EQUILIBRIUM,ESPORTS,EURO,FAKE NEWS,FALL,FAMILY,FAMINE,FARM,FARMING,FERTILIZER,FEUDALISM,FISH,FISSION,FLOWER,FORT KNOX,FRAGRANCE,FRANKENSTEIN,FRAUD,FREEDOM,FRIENDS,FRIENDSHIP,FRUIT,GADGET,GASOLINE,GENE,GENETICS,GOAT,GOD OF WAR,GODZILLA,GOLDEN RATIO,GOLDFISH,GOVERNMENT,GRAPE,GREECE,GREED,GREENPEACE,GRIM REAPER,GUERRILLA,GUITAR,HALF-LIFE,HAMLET,HAPPINESS,HEALTH,HEAT,HEAVEN,HERMES,HERO,HIMALAYAS,HISTORY,HIVE MIND,HOLIDAY,HOLY TRINITY,HOME,HONEY,HOPE,HORROR FILM,HUNTER,ICE CREAM,IDENTITY,IDEOLOGY,IMMIGRATION,INDIANA JONES,INFANT,INFECTION,INFLAMMATION,INSECT,INTERNET,IRON AGE,IRONY,IRRIGATION,IVORY,JOURNALISM,JOY,JUDAS,JUDGE,JUPITER,KANGAROO,KNIGHT,KRAKEN,KRAMPUS,LAPTOP,LASER,LAW,LEADERSHIP,LEATHER,LEPRECHAUN,LIGHT,LIMIT,LION,LIPSTICK,LOTTERY TICKET,LOYALTY,MACHINE LEARNING,MAGNETISM,MANAGER,MANGO,MAP,MARS,MECHANIC,MEDIA,MEDICINE,MEDITATION,MEME,MICROORGANISM,MIRROR,MOJITO,MOLECULE,MONARCHY,MONOPOLY,MORNING,MORTGAGE,MOTIVATION,MOUNTAINS,MUSEUM,MUTANT,NARCISSISM,NEUTRALITY,NUCLEAR FISSION,NUCLEAR FUSION,OAK,OCEAN,ODIN,OFFICE,OMELETTE,OPERATION,ORANGUTAN,ORCHARD,ORIGAMI,PAIN,PANCAKE,PANDA,PANTHER,PAPARAZZI,PAPER,PARADOX,PARTICLE,PASTA,PEGASUS,PENCIL,PENGUIN,PEPTIDE,PERIOD,PETER PAN,PHARMACY,PHOTOSYNTHESIS,PINEAPPLE,PIONEER,PIRATE,PLANTS,PLATFORM,POKER,POLICE,POLITICS,POLLEN,POPULATION,PRESIDENT,PRISON,PROCESSOR,PRODUCTION,PROPAGANDA,PUMPKIN,QUANTUM MECHANICS,RACECAR,RADIOACTIVITY,RAIN,RAPUNZEL,REALITY,RED ARMY,REINDEER,RESTAURANT,ROCKET,ROCKSTAR,ROULETTE,RUSSIA,SALT,SANGRIA,SARCASM,SATIRE,SAUSAGE,SCIENCE FICTION,SCIENTIST,SCULPTURE,SHADE,SHADOW,SHAME,SHIP,SIBERIA,SILK,SILK ROAD,SIMULATION,SINGULARITY,SKIN,SMARTPHONE,SMILE,SNAKE OIL,SOAP OPERA,SOCCER,SOCIAL NETWORK,SOFTWARE,SONAR,SONG,SORCERY,SOUP,SOVIET UNION,SPACE STATION,SPECTRUM,STADIUM,STAPLER GUN,STARTUP,STEEL,STONE,STORM,STRESS,SUCCESS,SUN,SUPERNOVA,SWAMP,SWEATER,TAVERN,TAXI,THEORY,THOR,TIME TRAVEL,TOXIN,TOY,TRADE,TREE,TREES,TRIBE,TRUFFLE,USB CABLE,VACCINE,VACUUM,VAMPIRE,VIRUS,VOLCANO,WAR,WEREWOLF,WHEAT,WHISKEY,WHISKY,WIFI,WINE,WISDOM,WOOD,XENOMORPH,YACHT,YOGA,ZEN,ZEPHYR,ZOMBIE,ZOMBIE APOCALYPSE,ZOO,ZYGOTE"
+    },
+    // {
+      // "category": "05 Misc",
+      // "name": "Some misc list",
+      // "sortName": "",
+      // "elements": ""
+    // },
+    // {
+      // "category": "06 Past Event",
+      // "name": "Some past event",
+      // "sortName": "",
+      // "elements": ""
+    // },
+  ]
+  lists.forEach( list => {
+    list.elements = ( list.elements ? list.elements.toLowerCase().trim().split(",") : [] )
+  } )
+  
+  lists.sort( (a, b) => a.sortName > b.sortName )
+  lists.sort( (a, b) => a.category > b.category )
+  
+  const listMenu = Create( "select", { assign:{ id: "list-menu" }, attr:{ tabIndex: -1 }, classes:["actionmenu"], style:{ width: "60px" } } )
+  listMenu.addEventListener( "change", ev => {
+    const list = lists[ev.target.selectedIndex]
+    if ( ev.target.selectedIndex === 0 )
+      return
+    
+    ev.target.selectedIndex = 0
+    ev.target.blur()
+    
+    if ( !list.elements.length )
+      return
+    
+    Get("#solutions").replaceChildren()
+    list.elements.toReversed().forEach( name => search(name, true) )
+  } )
+  
+  Append(
+    listMenu,
+    ...lists.map( (list, i) => Create( "option", Assign( { assign:{ innerText: list.name + ( i > 0 ? " (" + list.elements.length + ")" : "" ), value: i } }, list.options ?? {} ) ) )
+  )
+  
+  Append( titleRow, listMenu )
+  
   
   // Load elements button
   const loadBtn = Create( "button", { assign:{ innerText: "Load element list" }, attr:{ tabIndex: -1 } } )
@@ -190,7 +613,7 @@ function removeNonExistingResults() {
   // Event button
   if (eventElements.length) {
     const eventBtn = Create( "button", { assign:{ innerText: eventName }, style:{ backgroundColor: eventBackgroundColor, color: eventFontColor, borderColor: eventBorderColor } } )
-    eventBtn.addEventListener( "click", () => eventElements.slice().reverse().forEach( name => search(name, true) ) )
+    eventBtn.addEventListener( "click", () => eventElements.toReversed().forEach( name => search(name, true) ) )
     Append( titleRow, eventBtn )
   }
 
@@ -735,7 +1158,7 @@ function addRandomSolutions( amount=10 ) {
   const candidates = data.create.filter( x => x?.[0] ).map( (_, i) => i )
   const randomElementIds = selectRandomArrayItems(candidates, amount)
 
-  document.querySelector("#solutions").replaceChildren()
+  Get("#solutions").replaceChildren()
   randomElementIds.forEach( id => addSolutions(id) )
 }
 
