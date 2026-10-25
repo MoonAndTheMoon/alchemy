@@ -230,13 +230,13 @@ function removeNonExistingResults() {
       "category": "03 Achievement",
       "name": "Commander in Chief",
       "sortName": "Commander in Chief",
-      "elements": ""
+      "elements": "GEORGE WASHINGTON,JOHN ADAMS,THOMAS JEFFERSON,JAMES MADISON,JAMES MONROE,JOHN QUINCY ADAMS,ANDREW JACKSON,MARTIN VAN BUREN,WILLIAM HENRY HARRISON,JOHN TYLER,JAMES POLK,ZACHARY TAYLOR,MILLARD FILLMORE,FRANKLIN PIERCE,JAMES BUCHANAN,ABRAHAM LINCOLN,ANDREW JOHNSON,ULYSSES GRANT,RUTHERFORD HAYES,JAMES GARFIELD,CHESTER ARTHUR,GROVER CLEVELAND,BENJAMIN HARRISON,WILLIAM MCKINLEY,THEODORE ROOSEVELT,WILLIAM TAFT,WOODROW WILSON,WARREN HARDING,CALVIN COOLIDGE,HERBERT HOOVER,FRANKLIN ROOSEVELT,HARRY TRUMAN,DWIGHT EISENHOWER,JOHN KENNEDY,LYNDON JOHNSON,RICHARD NIXON,GERALD FORD,JIMMY CARTER,RONALD REAGAN,GEORGE BUSH,BILL CLINTON,GEORGE W BUSH,BARACK OBAMA,DONALD TRUMP,JOE BIDEN"
     },
     {
       "category": "03 Achievement",
       "name": "Pharaohs Court",
       "sortName": "Pharaohs Court",
-      "elements": ""
+      "elements": "RA,OSIRIS,ISIS,HORUS,SET,ANUBIS,THOTH,BASTET,SEKHMET,HATHOR,NEPHTHYS,PTAH,AMUN,ATUM,GEB,NUT,SHU,TEFNUT,SOBEK,KHONSU,MAAT,KHNUM,APEP,SOKAR,SERQET,NEKHBET,WADJET,MONTU"
     },
     {
       "category": "03 Achievement",
@@ -248,13 +248,13 @@ function removeNonExistingResults() {
       "category": "03 Achievement",
       "name": "Greek Alphabet",
       "sortName": "Greek Alphabet",
-      "elements": ""
+      "elements": "ALPHA,BETA,GAMMA,DELTA,EPSILON,ZETA,ETA,THETA,IOTA,KAPPA,LAMBDA,MU,NU,XI,OMICRON,PI,RHO,SIGMA,TAU,UPSILON,PHI,CHI,PSI,OMEGA"
     },
     {
       "category": "03 Achievement",
       "name": "Norse Saga",
       "sortName": "Norse Saga",
-      "elements": ""
+      "elements": "ODIN,THOR,LOKI,FREYA,FRIGG,BALDUR,HEIMDALL,TYR,NJORD,FREYR,HEL,IDUN,BRAGI,VIDAR,VALI,ULLR,FENRIR,JORMUNGANDR,SLEIPNIR,VALKYRIE,YGGDRASIL,ASGARD,MIDGARD,VALHALLA,RAGNAROK,MJOLNIR,BIFROST,JOTUNHEIM,NIFLHEIM,MUSPELHEIM"
     },
     {
       "category": "03 Achievement",
@@ -284,13 +284,13 @@ function removeNonExistingResults() {
       "category": "03 Achievement",
       "name": "Currency Exchange",
       "sortName": "Currency Exchange",
-      "elements": ""
+      "elements": "DOLLAR,EURO,POUND,YEN,YUAN,RUBLE,RUPEE,WON,PESO,FRANC,LIRA,DINAR,DIRHAM,REAL,RAND,SHEKEL,KRONA,ZLOTY,FORINT,BAHT,RINGGIT,RUPIAH,HRYVNIA,LEV,KORUNA"
     },
     {
       "category": "03 Achievement",
       "name": "Seven Seas",
       "sortName": "Seven Seas",
-      "elements": ""
+      "elements": "PACIFIC OCEAN,ATLANTIC OCEAN,INDIAN OCEAN,ARCTIC OCEAN,SOUTHERN OCEAN,MEDITERRANEAN SEA,CARIBBEAN SEA,BALTIC SEA,BLACK SEA,RED SEA,NORTH SEA,CASPIAN SEA,CORAL SEA,BERING SEA,ARABIAN SEA,DEAD SEA,AEGEAN SEA,ADRIATIC SEA,TASMAN SEA,YELLOW SEA,SOUTH CHINA SEA,BARENTS SEA,SARGASSO SEA,CELTIC SEA,IONIAN SEA"
     },
     {
       "category": "03 Achievement",
@@ -332,13 +332,13 @@ function removeNonExistingResults() {
       "category": "03 Achievement",
       "name": "Dog Person",
       "sortName": "Dog Person",
-      "elements": ""
+      "elements": "BORDER COLLIE,CORGI,GERMAN SHEPHERD,GOLDEN RETRIEVER,HUSKY,POODLE,PUG"
     },
     {
       "category": "03 Achievement",
       "name": "Citizen of the World",
       "sortName": "Citizen of the World",
-      "elements": ""
+      "elements": "ALGERIA,AUSTRALIA,BRAZIL,CANADA,CHINA,INDIA,ITALY,JAPAN,NORWAY,USA"
     },
     {
       "category": "03 Achievement",
@@ -356,7 +356,7 @@ function removeNonExistingResults() {
       "category": "03 Achievement",
       "name": "Holy Trinity",
       "sortName": "Holy Trinity",
-      "elements": ""
+      "elements": "FATHER,HOLY SPIRIT,SON"
     },
     {
       "category": "03 Achievement",
@@ -374,7 +374,7 @@ function removeNonExistingResults() {
       "category": "03 Achievement",
       "name": "Atom Smasher",
       "sortName": "Atom Smasher",
-      "elements": ""
+      "elements": "CALCIUM,CARBON,HELIUM,HYDROGEN,IRON,LITHIUM,MERCURY,PLUTONIUM,SILICON,ZINC"
     },
     {
       "category": "03 Achievement",
@@ -440,55 +440,55 @@ function removeNonExistingResults() {
       "category": "03 Achievement",
       "name": "Mythology Lover",
       "sortName": "Mythology Lover",
-      "elements": ""
+      "elements": "CERBERUS,CYCLOPS,DRAGON,GRIFFIN,MEDUSA,MINOTAUR,PEGASUS,PHOENIX,SPHINX,UNICORN"
     },
     {
       "category": "03 Achievement",
       "name": "Cinema Fan",
       "sortName": "Cinema Fan",
-      "elements": ""
+      "elements": "ACTION,ADVENTURE,COMEDY,DRAMA,FANTASY,HORROR,MUSICAL,ROMANCE,SCI-FI,THRILLER"
     },
     {
       "category": "03 Achievement",
       "name": "Music Lover",
       "sortName": "Music Lover",
-      "elements": ""
+      "elements": "BLUES,CLASSIC,COUNTRY,JAZZ,METAL,POP,RAP,REGGAE,ROCK,TECHNO"
     },
     {
       "category": "03 Achievement",
       "name": "Fruit Lover",
       "sortName": "Fruit Lover",
-      "elements": ""
+      "elements": "APPLE,BANANA,CHERRY,GRAPE,KIWI,MANGO,ORANGE,PINEAPPLE,STRAWBERRY,WATERMELON"
     },
     {
       "category": "03 Achievement",
       "name": "Botanist",
       "sortName": "Botanist",
-      "elements": ""
+      "elements": "DAISY,DANDELION,LAVENDER,LILY,ORCHID,PEONY,POPPY,ROSE,SUNFLOWER,TULIP"
     },
     {
       "category": "03 Achievement",
       "name": "Money Maker",
       "sortName": "Money Maker",
-      "elements": ""
+      "elements": "AMAZON,APPLE,FACEBOOK,GOOGLE,MICROSOFT,NVIDIA,TESLA"
     },
     {
       "category": "03 Achievement",
       "name": "Mechanic",
       "sortName": "Mechanic",
-      "elements": ""
+      "elements": "BENTLEY,CADILLAC,FERRARI,FORD,MERCEDES,PORSCHE,SUBARU,TOYOTA,VOLKSWAGEN"
     },
     {
       "category": "03 Achievement",
       "name": "Social Networker",
       "sortName": "Social Networker",
-      "elements": ""
+      "elements": "REDDIT,FACEBOOK,LINKEDIN,TIKTOK,INSTAGRAM,SNAPCHAT,WECHAT,PINTEREST"
     },
     {
       "category": "03 Achievement",
       "name": "3 Letter Club",
       "sortName": "3 Letter Club",
-      "elements": ""
+      "elements": "FBI,KGB,MI6,CIA,NSA,MOSSAD"
     },
     {
       "category": "03 Achievement",
@@ -512,13 +512,13 @@ function removeNonExistingResults() {
       "category": "03 Achievement",
       "name": "Esotericist",
       "sortName": "Esotericist",
-      "elements": ""
+      "elements": "FOOL,MAGICIAN,HIGH PRIESTESS,EMPRESS,EMPEROR,HIEROPHANT,LOVERS,CHARIOT,STRENGTH,HERMIT,WHEEL OF FORTUNE,JUSTICE,HANGED MAN,DEATH,TEMPERANCE,DEVIL,TOWER,STAR,MOON,SUN,JUDGEMENT,WORLD"
     },
     {
       "category": "03 Achievement",
       "name": "Zodiac Master",
       "sortName": "Zodiac Master",
-      "elements": ""
+      "elements": "ARIES,TAURUS,GEMINI,CANCER,LEO,VIRGO,LIBRA,SCORPIO,SAGITTARIUS,CAPRICORN,AQUARIUS,PISCES"
     },
     {
       "category": "03 Achievement",
@@ -530,7 +530,7 @@ function removeNonExistingResults() {
       "category": "03 Achievement",
       "name": "Orchestra",
       "sortName": "Orchestra",
-      "elements": ""
+      "elements": "GUITAR,PIANO,VIOLIN,CELLO,DRUMS,SAXOPHONE,FLUTE,HARP,TRUMPET,TROMBONE,CLARINET,OBOE,BASSOON,ACCORDION,BANJO,MANDOLIN,UKULELE,HARMONICA,ORGAN,TUBA,VIOLA,XYLOPHONE,SITAR,BAGPIPES"
     },
     {
       "category": "04 Rarity",
@@ -575,6 +575,8 @@ function removeNonExistingResults() {
   
   lists.sort( (a, b) => a.sortName > b.sortName )
   lists.sort( (a, b) => a.category > b.category )
+  
+  window.lists = lists // Global reference to lists
   
   const listMenu = Create( "select", { assign:{ id: "list-menu" }, attr:{ tabIndex: -1 }, classes:["actionmenu"], style:{ width: "60px" } } )
   listMenu.addEventListener( "change", ev => {
