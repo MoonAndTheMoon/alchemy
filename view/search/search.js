@@ -665,7 +665,7 @@ window.addEventListener("contextmenu", function(event) {
 
 // Utilities
 
-const compareMixedNumericFn = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'}).compare
+const compareMixedNumericFn = new Intl.Collator("en", {numeric: true, sensitivity: 'base'}).compare
 
 
 function importData(fn, multiple=true) {
@@ -1440,7 +1440,7 @@ function regExpSearch(query, words, limit=50) {
       if (!query)
         return []
       const re = new RegExp(query)
-      return words.filter( word => word.toLowerCase().match(query) ).slice(0, limit)
+      return words.filter( word => word.toLowerCase().match(re) ).slice(0, limit)
       
     } catch (e) {
       return []
