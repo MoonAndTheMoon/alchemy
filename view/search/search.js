@@ -1081,6 +1081,16 @@ function findChains() {
 }
 
 
+function printCharacterCounts() {
+	const results = []
+	
+	for ( let i = 1; i <= 30; i++ ) {
+		results.push( i + ": " + data.namesSorted.filter( name => name.match( "^.{" + i + "}$" ) ).length )
+	}
+	
+	console.log( results.join("\n") )
+}
+
 
 // Element File
 
