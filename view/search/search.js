@@ -1031,7 +1031,7 @@ function downloadDisplayedIngredients() {
 	const ingredientSet = new Set();
 	[...GetAll(".ingredient")].forEach( ingredient => ingredientSet.add( ingredient.textContent.toLowerCase() ) )
 	
-	downloadElements( "ingredients.txt", [...ingredientSet.keys()] )
+	downloadElements( "ingredients.txt", [...ingredientSet.keys()].slice(0, 116) )
 }
 
 
