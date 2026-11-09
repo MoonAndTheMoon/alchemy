@@ -1035,6 +1035,15 @@ function downloadDisplayedIngredients() {
 }
 
 
+function getNextMissingInteger() {
+	for ( let i = 0; i <= 10000; i++ ) {
+		if ( elementsByName.get(""+i) == null ) {
+			return i
+		}
+	}
+}
+
+
 function downloadReconstructedMerges() {
   const reconstructedMerges = []
 
@@ -1095,6 +1104,20 @@ function printCharacterCounts() {
 	}
 	
 	console.log( results.join("\n") )
+}
+
+
+function printUnexplainedIngredients() {
+	const ingredientSet = new Set();
+	[...GetAll(".ingredient.norecipe")].forEach( ingredient => {
+		const id = ingredient.textContent.toLowerCase()
+		const existingSolution = solutions.querySelector(`[data-id="${id}"]`)
+		if ( !existingSolution && !ingredient.matches(".have") ) {
+			ingredientSet.add( ingredient.textContent.toLowerCase() )
+		}
+	} )
+	
+	console.log( [...ingredientSet.keys()].join("\n") )
 }
 
 
