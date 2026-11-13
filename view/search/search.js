@@ -1121,6 +1121,14 @@ function printUnexplainedIngredients() {
 }
 
 
+function addMissingListElements() {
+	const allListElements = lists.map( list => list.elements ).flat()
+	const allMissing = allListElements.filter( name => !~getId(name) )
+	
+	allMissing.toReversed().forEach( name => search(name, true) )
+}
+
+
 // Element File
 
 async function loadElements(files) {
